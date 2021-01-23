@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+body {
+    background-color: #261f1c;
+    color: #f0f0f0;
+    overflow-x: hidden;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 400;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.value {
+    // color: #421ab0;
+}
+.currency {
+    max-width: 500px;
+    background-color: #bf946f;
+    color: #261f1c;
+    border-radius: 7px;
+    padding: 10px 20px;
+    margin: 20px;
+}
+.saves {
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    padding: 20px 0 5px;
+}
+.save {
+    padding: 7px 15px;
+    background: #d9ab82;
+    color: #261f1c;
+    border-radius: 4px;
+
+}
+.save + .save {
+    margin-left: 15px;
+}
+.save__amount {
+    margin: 0 5px;
+}
