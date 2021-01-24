@@ -8,35 +8,20 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/script.js" defer></script>
 
-  <!-- <script>
-      function CBR_XML_Daily_Ru(rates) {
-        function trend(current, previous) {
-          if (current > previous) return ' ▲';
-          if (current < previous) return ' ▼';
-          return '';
-        }
-
-        var USDrate = rates.Valute.USD.Value.toFixed(4).replace('.', ',');
-        var USD = document.getElementById('USD');
-        USD.innerHTML = USD.innerHTML.replace('00,0000', USDrate);
-        USD.innerHTML += trend(rates.Valute.USD.Value, rates.Valute.USD.Previous);
-
-        var EURrate = rates.Valute.EUR.Value.toFixed(4).replace('.', ',');
-        var EUR = document.getElementById('EUR');
-        EUR.innerHTML = EUR.innerHTML.replace('00,0000', EURrate);
-        EUR.innerHTML += trend(rates.Valute.EUR.Value, rates.Valute.EUR.Previous);
-      }
-    </script> 
-    <link rel="dns-prefetch" href="https://www.cbr-xml-daily.ru/" />
-    <script src="//www.cbr-xml-daily.ru/daily_jsonp.js" async></script> -->
 </head>
 
 <body>
   <header class="header">
-    <!-- <div id="USD">Доллар США $ — 00,0000 руб.</div>
-      <div id="EUR">Евро € — 00,0000 руб.</div> -->
+    <div class="saves">
+    </div>
   </header>
-  <div class="saves">
+  
+  <div class="form">
+    <div class="input-box">
+      <input type="text" name="amount" class="amount-input">
+      <span class="input-line"></span>
+    </div>
+    <button id="send">send</button>
   </div>
   <footer class="footer"></footer>
 </body>

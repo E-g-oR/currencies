@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap");
 * {
     margin: 0;
     padding: 0;
@@ -12,11 +12,19 @@ a {
 li {
     list-style: none;
 }
+
+$bodyColor: #232323;
+$textColor: #d9d9d9;
+$buttonColor: #f28379;
+$mainColor: #35528c;
+
+
+
 body {
-    background-color: #261f1c;
-    color: #f0f0f0;
+    background-color: $bodyColor;
+    color: $textColor;
     overflow-x: hidden;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 400;
 }
 .container {
@@ -29,9 +37,9 @@ body {
 }
 .currency {
     max-width: 500px;
-    background-color: #bf946f;
-    color: #261f1c;
-    border-radius: 7px;
+    background-color: $mainColor;
+    color: $textColor;
+    border-radius: 5px;
     padding: 10px 20px;
     margin: 20px;
 }
@@ -45,14 +53,69 @@ body {
 }
 .save {
     padding: 7px 15px;
-    background: #d9ab82;
-    color: #261f1c;
-    border-radius: 4px;
-
+    background: $mainColor;
+    background: $buttonColor;
+    color: $textColor;
+    border-radius: 3px;
 }
 .save + .save {
     margin-left: 15px;
 }
 .save__amount {
     margin: 0 5px;
+}
+
+.amount-input {
+    padding: 10px 20px;
+    font-size: 20px;
+    // margin: 18px;
+    position: relative;
+    background: transparent;
+    color: $textColor;
+}
+.input-box {
+    width: fit-content;
+    display: inline-block;
+    position: relative;
+    background-color: rgba($color: $textColor, $alpha: 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.input-line {
+    background: rgba($color: $textColor, $alpha: 0.3);
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $buttonColor;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: 0.3s;
+        z-index: 3;
+    }
+}
+.amount-input:focus + .input-line::after {
+    transform: scaleX(1);
+}
+#send {
+    text-transform: uppercase;
+    font-size: 18px;
+    background-color: $buttonColor;
+    padding: 7px 30px;
+    color: $textColor;
+    margin: 0 20px;
+    border-radius: 3px;
+}
+.form {
+    display: flex;
+    margin-left: 20px;
 }

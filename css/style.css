@@ -17,10 +17,10 @@ li {
 }
 
 body {
-  background-color: #261f1c;
-  color: #f0f0f0;
+  background-color: #232323;
+  color: #d9d9d9;
   overflow-x: hidden;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-weight: 400;
 }
 
@@ -32,9 +32,9 @@ body {
 
 .currency {
   max-width: 500px;
-  background-color: #bf946f;
-  color: #261f1c;
-  border-radius: 7px;
+  background-color: #35528c;
+  color: #d9d9d9;
+  border-radius: 5px;
   padding: 10px 20px;
   margin: 20px;
 }
@@ -56,9 +56,10 @@ body {
 
 .save {
   padding: 7px 15px;
-  background: #d9ab82;
-  color: #261f1c;
-  border-radius: 4px;
+  background: #35528c;
+  background: #f28379;
+  color: #d9d9d9;
+  border-radius: 3px;
 }
 
 .save + .save {
@@ -67,4 +68,72 @@ body {
 
 .save__amount {
   margin: 0 5px;
+}
+
+.amount-input {
+  padding: 10px 20px;
+  font-size: 20px;
+  position: relative;
+  background: transparent;
+  color: #d9d9d9;
+}
+
+.input-box {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: inline-block;
+  position: relative;
+  background-color: rgba(217, 217, 217, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.input-line {
+  background: rgba(217, 217, 217, 0.3);
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+.input-line::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f28379;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  z-index: 3;
+}
+
+.amount-input:focus + .input-line::after {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+}
+
+#send {
+  text-transform: uppercase;
+  font-size: 18px;
+  background-color: #f28379;
+  padding: 7px 30px;
+  color: #d9d9d9;
+  margin: 0 20px;
+  border-radius: 3px;
+}
+
+.form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 20px;
 }
