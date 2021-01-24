@@ -21,7 +21,7 @@ const savesTemplate = save => {
     </div>
   `
 }
-fetch('../asource/saves.js')
+fetch('https://e-g-or.github.io/currencies/asource/saves.js')
   .then(response => response.json())
   .then(data => {
     // console.log(data);
