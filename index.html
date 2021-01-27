@@ -6,24 +6,162 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCAR621q61sl26ra4DgOlGOPx7nsPyofeM",
+      authDomain: "my-currency-fin.firebaseapp.com",
+      projectId: "my-currency-fin",
+      storageBucket: "my-currency-fin.appspot.com",
+      messagingSenderId: "1052943938094",
+      appId: "1:1052943938094:web:8cdfe05911a839b91665bf"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <script src="js/script.js" defer></script>
 
 </head>
 
 <body>
   <header class="header">
-    <div class="saves">
+    <div class="container">
+      <div class="savings">
+        <div class="savings__item saving">
+          <span class="saving__text">
+            <span class="saving__currency">USD</span>
+            <span class="saving__amount">550</span>
+            <span class="saving__symbol">$</span>
+          </span>
+        </div>
+        <div class="savings__item saving">
+          <span class="saving__text">
+            <span class="saving__currency">EUR</span>
+            <span class="saving__amount">550</span>
+            <span class="saving__symbol">€</span>
+          </span>
+        </div>
+        <div class="savings__item saving">
+          <span class="saving__text">
+            <span class="saving__currency">BYN</span>
+            <span class="saving__amount">595</span>
+            <span class="saving__symbol">Br</span>
+          </span>
+        </div>
+      </div>
     </div>
   </header>
-  
-  <div class="form">
-    <div class="input-box">
-      <input type="text" name="amount" class="amount-input">
-      <span class="input-line"></span>
+
+
+  <section class="section rates-section">
+    <div class="container">
+      <div class="currencies">
+        <div class="currencies__item currency">
+          <div class="currency__body">
+            <div class="currency__img">
+              <img src="img/usa.jpg" alt="">
+            </div>
+            <div class="currency__content">
+              <h4 class="currency__title">Валюта: Доллар США</h4>
+              <p class="currrency__text">Текущий курс:<span class="currency__rate">2,4576</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="currencies__item currency">
+          <div class="currency__body">
+            <div class="currency__img">
+              <img src="img/europe.jpg" alt="">
+            </div>
+            <div class="currency__content">
+              <h4 class="currency__title">Валюта: Евро</h4>
+              <p class="currrency__text">Текущий курс:<span class="currency__rate">3,0976</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="currencies__item currency">
+          <div class="currency__body">
+            <div class="currency__img">
+              <img src="img/thai.jpg" alt="">
+            </div>
+            <div class="currency__content">
+              <h4 class="currency__title">Валюта: Батов</h4>
+              <p class="currrency__text">Текущий курс:<span class="currency__rate">8,1176</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="currencies__item currency">
+          <div class="currency__body">
+            <div class="currency__img">
+              <img src="img/bit.jpg" alt="">
+            </div>
+            <div class="currency__content">
+              <h4 class="currency__title">Валюта: Bitcoin</h4>
+              <p class="currrency__text">Текущий курс:<span class="currency__rate">2,4576</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button id="send">send</button>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <button class="show-form-button">Добавить сбережения</button>
+      <div class="footer__bottom">
+        <span class="footer__date">27.01.2021</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="popup">
+    <div class="container">
+      <div class="popup__window">
+        <div class="popup__body">
+          <h2 class="popup__title">Введите данные</h2>
+          <form class="form">
+            <div class="input-box">
+              <input type="text" class="saving-amount-input input" placeholder="Введите сумму">
+              <div class="input-line"></div>
+            </div>
+            <div class="form__item input-box ">
+              <div class="radio-box">
+                <label>
+                  <input class="radio-input" type="radio" name="currency-type" value="USD">
+                  <div class="radio-style"></div>
+                  <span>USD</span>
+                </label>
+              </div>
+              <div class="radio-box">
+                <label>
+                  <input class="radio-input" type="radio" name="currency-type" value="EUR">
+                  <div class="radio-style"></div>
+                  <span>EUR</span>
+                </label>
+              </div>
+              <div class="radio-box">
+                <label>
+                  <input class="radio-input" type="radio" name="currency-type" value="BYN">
+                  <div class="radio-style"></div>
+                  <span>BYN</span>
+                </label>
+              </div>
+            </div>
+            <button class="form-send-button" type="submit">Записать</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  <footer class="footer"></footer>
+
+
 </body>
 
 </html>
