@@ -19,17 +19,89 @@ const popup = document.querySelector('.popup'); //  весь блок с фор�
 const form = document.querySelector('.form'); //  форма
 const savingAmountInputElem = document.querySelector('.saving-amount-input'); //  поле ввода
 const radioInput = document.querySelectorAll('.radio-input');   //  все радио кнопки
+const inputPattern = /[^0-9]/g;
 
-showFormButton.addEventListener('click', () => {
-  popup.classList.add('active');
-});
-document.addEventListener('keydown', e => {
-  if (e.code === 'Escape') {
-    popup.classList.remove('active');
+
+
+const popupRemove = () => popup.classList.remove('active');
+
+
+const currencyTypes = ['USD', 'EUR', 'BYN'];
+
+
+
+const setSavings = {
+  // savings: [
+  //   {
+  //     type: 'USD',
+  //     amount: 50
+  //   },
+  //   {
+  //     type: 'EUR',
+  //     amount: 70
+  //   },
+  //   {
+  //     type: 'BYN',
+  //     amount: 195
+  //   }
+  // ]
+  savings: [],
+  setSave(currency, amount) {
+    
+  },
+  getSaves() {
+
   }
-});
-popup.addEventListener('click', e => {
-  if (!(e.target.closest('.popup__window'))) {
-    popup.classList.remove('active');
-  }
-})
+  // получить (и показать?) сбережения
+  // записать сбережения
+
+}
+
+localStorage.clear();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// !  Функция инициализации (все события и прочее)
+const init = () => {
+  showFormButton.addEventListener('click', () => {      //*   вызывает окно с формой
+    popup.classList.add('active');
+  });
+
+  savingAmountInputElem.addEventListener('input', function () {
+    this.value = this.value.replace(inputPattern, '');
+  });
+
+  form.addEventListener('submit', e => {      //*   обработка отправки формы
+    e.preventDefault();
+    const message = 'Заполните все поля';
+    const savingCurrencyAmount = form.elements.savingCurrencyAmount.value;
+    const savingCurrencyType = form.elements.savingCurrencyType.value;
+    if (savingCurrencyType !== '' && savingCurrencyAmount !== '') {
+      console.log(savingCurrencyAmount, savingCurrencyType);
+      popupRemove();
+      form.reset();
+    } else alert(message);
+  })
+
+  document.addEventListener('keydown', e => {     //*   обработка нажатия клавиш чтобы закрыть форму по Escape
+    if (e.code === 'Escape') popupRemove();
+  });
+
+  popup.addEventListener('click', e => {      //*   закрытие формы по нажатию мимо формы
+    if (!(e.target.closest('.popup__window'))) popupRemove();
+  });
+}
+// !  конец
+
+document.addEventListener('DOMContentLoaded', init); //! вызов инициализирующей функции
