@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" href="img/bit.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="css/style.css" />
@@ -32,82 +33,18 @@
 </head>
 
 <body>
+
   <header class="header">
     <div class="container">
       <div class="savings">
-        <div class="savings__item saving">
-          <span class="saving__text">
-            <span class="saving__currency">USD</span>
-            <span class="saving__amount">550</span>
-            <span class="saving__symbol">$</span>
-          </span>
-        </div>
-        <div class="savings__item saving">
-          <span class="saving__text">
-            <span class="saving__currency">EUR</span>
-            <span class="saving__amount">550</span>
-            <span class="saving__symbol">€</span>
-          </span>
-        </div>
-        <div class="savings__item saving">
-          <span class="saving__text">
-            <span class="saving__currency">BYN</span>
-            <span class="saving__amount">595</span>
-            <span class="saving__symbol">Br</span>
-          </span>
-        </div>
       </div>
+      <span class="converted"></span>
     </div>
   </header>
-
 
   <section class="section rates-section">
     <div class="container">
       <div class="currencies">
-        <div class="currencies__item currency">
-          <div class="currency__body">
-            <div class="currency__img">
-              <img src="img/usa.jpg" alt="">
-            </div>
-            <div class="currency__content">
-              <h4 class="currency__title">Валюта: Доллар США</h4>
-              <p class="currrency__text">Текущий курс:<span class="currency__rate">2,4576</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="currencies__item currency">
-          <div class="currency__body">
-            <div class="currency__img">
-              <img src="img/europe.jpg" alt="">
-            </div>
-            <div class="currency__content">
-              <h4 class="currency__title">Валюта: Евро</h4>
-              <p class="currrency__text">Текущий курс:<span class="currency__rate">3,0976</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="currencies__item currency">
-          <div class="currency__body">
-            <div class="currency__img">
-              <img src="img/thai.jpg" alt="">
-            </div>
-            <div class="currency__content">
-              <h4 class="currency__title">Валюта: Батов</h4>
-              <p class="currrency__text">Текущий курс:<span class="currency__rate">8,1176</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="currencies__item currency">
-          <div class="currency__body">
-            <div class="currency__img">
-              <img src="img/bit.jpg" alt="">
-            </div>
-            <div class="currency__content">
-              <h4 class="currency__title">Валюта: Bitcoin</h4>
-              <p class="currrency__text">Текущий курс:<span class="currency__rate">2,4576</span></p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -128,27 +65,28 @@
           <h2 class="popup__title">Введите данные</h2>
           <form class="form">
             <div class="input-box">
-              <input type="text" class="saving-amount-input input" placeholder="Введите сумму">
+              <input type="text" class="saving-amount-input input" name="savingCurrencyAmount"
+                placeholder="Введите сумму">
               <div class="input-line"></div>
             </div>
             <div class="form__item input-box ">
               <div class="radio-box">
                 <label>
-                  <input class="radio-input" type="radio" name="currency-type" value="USD">
+                  <input class="radio-input" type="radio" name="savingCurrencyType" value="USD">
                   <div class="radio-style"></div>
                   <span>USD</span>
                 </label>
               </div>
               <div class="radio-box">
                 <label>
-                  <input class="radio-input" type="radio" name="currency-type" value="EUR">
+                  <input class="radio-input" type="radio" name="savingCurrencyType" value="EUR">
                   <div class="radio-style"></div>
                   <span>EUR</span>
                 </label>
               </div>
               <div class="radio-box">
                 <label>
-                  <input class="radio-input" type="radio" name="currency-type" value="BYN">
+                  <input class="radio-input" type="radio" name="savingCurrencyType" value="BYN">
                   <div class="radio-style"></div>
                   <span>BYN</span>
                 </label>
@@ -160,7 +98,6 @@
       </div>
     </div>
   </div>
-
 
 </body>
 

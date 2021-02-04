@@ -33,6 +33,10 @@ body {
   padding: 0 20px;
 }
 
+.header {
+  text-align: center;
+}
+
 .savings {
   margin-top: 20px;
   display: -webkit-box;
@@ -55,6 +59,10 @@ body {
   border-radius: 3px;
 }
 
+.rates-section {
+  margin-top: 30px;
+}
+
 .currencies {
   margin-bottom: 100px;
 }
@@ -64,7 +72,7 @@ body {
   background-color: #141414;
   max-width: 550px;
   padding: 20px;
-  margin: 30px auto;
+  margin: 0px auto 30px;
   border-radius: 5px;
 }
 
@@ -169,7 +177,7 @@ body {
 }
 
 .popup__window {
-  margin-top: 70px;
+  margin-top: -70px;
   background-color: #d9d9d9;
   background-color: #141414;
   color: #fff;
@@ -181,7 +189,7 @@ body {
 }
 
 .popup.active .popup__window {
-  margin-top: 0px;
+  margin-top: -170px;
 }
 
 .form__item {
@@ -219,7 +227,7 @@ body {
 }
 
 .input-line::before {
-  content: '';
+  content: "";
   display: block;
   height: 3px;
   width: 100%;
@@ -297,6 +305,12 @@ body {
 @media all and (max-width: 535px) {
   .currency__title {
     font-size: 26px;
+  }
+  .popup__window {
+    margin-top: -180px;
+  }
+  .popup.active .popup__window {
+    margin-top: -250px;
   }
 }
 
