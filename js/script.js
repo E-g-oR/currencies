@@ -24,6 +24,7 @@ const radioInput = document.querySelectorAll('.radio-input');   //  все ра�
 const inputPattern = /\D/g;
 const footerDate = document.querySelector('.footer__date');
 const convertedElem = document.querySelector('.converted');
+const clearLS = document.querySelector('.clearLS');
 // /^[-0-9]{1}[0-9]{1,8}$/
 // var USDRate = 0;
 // var EURRate = 0;
@@ -90,6 +91,7 @@ const currenciesPattern = data => {
 }
 
 const getRates = (list) => {
+  currenciesBlock.innerHTML = '';
   list.forEach(url => {
     fetch(url)
       .then(response => response.json())
@@ -215,7 +217,12 @@ const init = () => {
   setSavings.getRatesToConvert();
   getRates(URLRatesList);
 
-
+  clearLS.addEventListener('click', () => {
+    localStorage.clear();
+    setSavings.getSaves();
+    getRates(URLRatesList);
+    setSavings.getRatesToConvert();
+  })
   savingAmountInputElem.addEventListener('input', function () {
     this.value = this.value.replace(inputPattern, '');
   });
