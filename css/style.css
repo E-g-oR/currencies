@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -21,13 +21,14 @@ body {
   color: #c8d6e5;
   color: #fff;
   overflow-x: hidden;
-  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
 
-input, button {
-  font-family: "M PLUS Rounded 1c", sans-serif;
+input,
+button {
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
@@ -44,6 +45,7 @@ input, button {
 
 .savings {
   margin-top: 20px;
+  font-weight: 300;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -75,6 +77,53 @@ input, button {
   padding: 20px;
   margin: 0px auto 30px;
   border-radius: 5px;
+  -webkit-transition: 0.3s cubic-bezier(0.53, 0, 0.52, 1);
+  transition: 0.3s cubic-bezier(0.53, 0, 0.52, 1);
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+  opacity: 0;
+  -webkit-animation-name: fade-in;
+          animation-name: fade-in;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+  -webkit-animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
+          animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.hidden {
+  opacity: 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    -webkit-transform: scale(0.75);
+            transform: scale(0.75);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    -webkit-transform: scale(0.75);
+            transform: scale(0.75);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .currency__body {
@@ -120,6 +169,10 @@ input, button {
   font-weight: 400;
 }
 
+.currrency__text {
+  line-height: 35px;
+}
+
 .currency__rate {
   margin: 0 10px;
 }
@@ -127,7 +180,7 @@ input, button {
 .clearLS {
   display: block;
   margin: 30px auto;
-  margin-bottom: 120px;
+  margin-bottom: 100px;
   padding: 7px 25px;
   background: #170e41;
   color: #fff;
@@ -196,6 +249,9 @@ input, button {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   border-radius: 5px;
+  -webkit-box-shadow: 0 10px 30px #070707;
+          box-shadow: 0 10px 30px #070707;
+  border: 1px solid #5555553d;
 }
 
 .popup.active .popup__window {
@@ -214,21 +270,23 @@ input, button {
 .input-box {
   margin: 15px auto;
   position: relative;
+  min-height: 37px;
 }
 
 .input {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   padding: 7px 15px;
   font-size: 18px;
   color: #304ffe;
-}
-
-.saving-amount-input {
   background: rgba(0, 0, 0, 0.1);
 }
 
 .input-line {
+  position: absolute;
   background-color: rgba(255, 255, 255, 0.1);
   height: 2px;
   width: 100%;
@@ -239,13 +297,18 @@ input, button {
 .input-line::before {
   content: "";
   display: block;
-  height: 3px;
+  height: 2px;
   width: 100%;
   background-color: #304ffe;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   -webkit-transform: scaleX(0);
           transform: scaleX(0);
+}
+
+.input:focus {
+  -webkit-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+          box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
 .input:focus + .input-line::before {
@@ -290,8 +353,8 @@ input, button {
   width: 8px;
   height: 8px;
   border-radius: 20px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition: 0.13s;
+  transition: 0.13s;
 }
 
 .radio-style + span {
@@ -299,8 +362,8 @@ input, button {
 }
 
 .radio-input:focus + .radio-style {
-  -webkit-box-shadow: 0px 0px 0px 2px #feca57;
-          box-shadow: 0px 0px 0px 2px #feca57;
+  -webkit-box-shadow: 0px 0px 0px 2px #fff;
+          box-shadow: 0px 0px 0px 2px #fff;
 }
 
 .radio-input:checked + .radio-style::before {
@@ -313,6 +376,13 @@ input, button {
 }
 
 @media all and (max-width: 535px) {
+  .currency__img {
+    width: 40px;
+    height: 40px;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 40px;
+            flex: 0 0 40px;
+  }
   .currency__title {
     font-size: 26px;
   }
@@ -332,18 +402,14 @@ input, button {
     margin: 15px auto;
     padding: 10px;
   }
-  .currency__img {
-    width: 40px;
-    height: 40px;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 40px;
-            flex: 0 0 40px;
-  }
   .currency__content {
     margin-left: 10px;
   }
   .currency__title {
     font-size: 22px;
+  }
+  .currrency__text {
+    line-height: 23px;
   }
 }
 

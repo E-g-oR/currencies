@@ -5,9 +5,9 @@ const URLRatesList = [
   'https://www.nbrb.by/api/exrates/rates/145',      // Доллар США
   'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
   'https://www.nbrb.by/api/exrates/rates/310',      // Тайский бат
-  // 'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
-  // 'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
-  // 'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
+  'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
+  'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
+  'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
   'https://blockchain.info/ticker',                 // Bitcoin
 ];
 // !  Конец
@@ -25,9 +25,7 @@ const inputPattern = /\D/g;
 const footerDate = document.querySelector('.footer__date');
 const convertedElem = document.querySelector('.converted');
 const clearLS = document.querySelector('.clearLS');
-// /^[-0-9]{1}[0-9]{1,8}$/
-// var USDRate = 0;
-// var EURRate = 0;
+var currenciesItemList = document.getElementsByClassName('currency');
 
 
 const popupRemove = () => {
@@ -50,7 +48,7 @@ const savingPattern = (data) => {
 
 
 
-const currenciesPattern = data => {
+const currenciesPattern = (data, transitionDelay) => {
   if ((data.Cur_Abbreviation === 'USD')) {
     localStorage.setItem('USDRate', data.Cur_OfficialRate);
     // setSavings.getRatesToConvert(data.Cur_Abbreviation, data.Cur_OfficialRate);
@@ -63,7 +61,7 @@ const currenciesPattern = data => {
       data.Cur_Abbreviation === 'THB' ? URLImagesList[2] :
         URLImagesList[3];
   if (data.Cur_Name) return `
-        <div class="currencies__item currency">
+        <div class="currencies__item currency hidden" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
@@ -76,7 +74,7 @@ const currenciesPattern = data => {
         </div>
   `
   else return `
-        <div class="currencies__item currency">
+        <div class="currencies__item currency hidden" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
@@ -91,12 +89,14 @@ const currenciesPattern = data => {
 }
 
 const getRates = (list) => {
+  let transitionDelay = 0.2;
   currenciesBlock.innerHTML = '';
   list.forEach(url => {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        currenciesBlock.innerHTML += currenciesPattern(data);
+        currenciesBlock.innerHTML += currenciesPattern(data, transitionDelay);
+        transitionDelay += 0.2;
       })
   })
 }
@@ -113,22 +113,16 @@ const setSavings = {
     this.savings.forEach(elem => {
       const elemAmount = Number(elem.amount);
       let convertedElemAmount = 0;
-      // console.log(elem);
-      // console.log(elemAmount);
-      // console.log(convertedElemAmount);
       if (elem.type === 'USD') {
         this.ratesToConver.forEach(rateElem => {
           if (rateElem.type === 'USDRate') {
             convertedElemAmount = elemAmount * Number(rateElem.rate);
-            console.log(convertedElemAmount);
           }
         })
-      } else if(elem.type === 'EUR') {
-        // console.log(this.ratesToConver);
+      } else if (elem.type === 'EUR') {
         this.ratesToConver.forEach(rateElem => {
           if (rateElem.type === 'EURRate') {
             convertedElemAmount = elemAmount * Number(rateElem.rate);
-            console.log(convertedElemAmount);
           }
         })
       } else this.savingsBR += elemAmount;
@@ -160,7 +154,6 @@ const setSavings = {
     this.getSaves();
   },
   getRatesToConvert() {
-    // console.clear();
     this.ratesToConver = [];
     for (let i = 0; i < localStorage.length; i++) {
       if ((localStorage.key(i) === 'USDRate') || (localStorage.key(i) === 'EURRate')) {
@@ -172,7 +165,6 @@ const setSavings = {
         })
       }
     }
-    // console.log(this.ratesToConver);
   },
   getSaves() {
     this.savings = [];
@@ -196,33 +188,56 @@ const setSavings = {
     this.savings.forEach(elem => {
       savingsBlock.innerHTML += savingPattern(elem);
     })
-    console.log(this.savings);
     this.getRatesToConvert();
     this.convertSaves();
-    console.log(`Сбережения в рублях: ${this.savingsBR}`);
     convertedElem.textContent = this.savingsBR
   }
 }
 
 
-
 // !  Функция инициализации (все события и прочее)
 const init = () => {
+  setSavings.getSaves();
+  getRates(URLRatesList);
+  // setSavings.getRatesToConvert();
+
+
+  // ! ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲
+
+  // var todayObj = new Date();    //  создаю новый объект даты на сегодняшнее число
+  // var todayStr = todayObj.toISOString();    //  перевожу в формат "2021-02-09T15:49:39.773Z"
+  // var todayShort = todayStr.slice(0, 10);   //  получаю сегодняшнее число — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
+  // var firstDayOfYear = new Date();    // создаю еще один обьект Даты, чтобы получить первый день года (первое января)
+  // firstDayOfYear.setMonth(firstDayOfYear.getMonth() - firstDayOfYear.getMonth());   //  отнимаю число месяцев (получаю 0 - январь)
+  // firstDayOfYear.setDate(firstDayOfYear.getDate() - firstDayOfYear.getDate() + 1);    //  отнимаю число дней + 1 (получаю 1-е число)
+  // var firstDayOfYearStr = firstDayOfYear.toISOString();   //  перевожу в формат "2021-02-09T15:49:39.773Z"
+  // var firstDayOfYearShort = firstDayOfYearStr.slice(0, 10);   //  получаю начало года — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
+  // console.log(`Сегодня: ${todayShort}`);
+  // console.log(`Первого января: ${firstDayOfYearShort}`);
+  // const dynamicURL = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/145?startDate=${firstDayOfYearShort}&endDate=${todayShort}`;
+  // fetch(dynamicURL)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data);
+  //     console.log(data[0].Cur_OfficialRate);
+  //     console.log(data[data.length - 1].Cur_OfficialRate);
+  //   })
+
+  // ! ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ 
+
+
   showFormButton.addEventListener('click', () => {      //*   вызывает окно с формой
     popup.classList.add('active');
     document.body.style.overflow = 'hidden';
   });
-
-  setSavings.getSaves();
-  setSavings.getRatesToConvert();
-  getRates(URLRatesList);
 
   clearLS.addEventListener('click', () => {
     localStorage.clear();
     setSavings.getSaves();
     getRates(URLRatesList);
     setSavings.getRatesToConvert();
-  })
+  });
+
   savingAmountInputElem.addEventListener('input', function () {
     this.value = this.value.replace(inputPattern, '');
   });
@@ -234,9 +249,7 @@ const init = () => {
     const savingCurrencyType = form.elements.savingCurrencyType.value;
     if (savingCurrencyType !== '' && savingCurrencyAmount !== '') {
       // console.log(`Введено число: ${savingCurrencyAmount}, выбрана валюта: ${savingCurrencyType}`);
-
       setSavings.setSave(savingCurrencyType, savingCurrencyAmount);
-
       popupRemove();
       form.reset();
     } else alert(message);
@@ -250,10 +263,7 @@ const init = () => {
     if (!(e.target.closest('.popup__window'))) popupRemove();
   });
 
-  // footerDate.textContent = new Date().toLocaleDateString();
   footerDate.textContent = new Date().toDateString();
-
-
 }
 // !  конец
 
