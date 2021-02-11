@@ -3,11 +3,11 @@
 const URLRatesList = [
   'https://www.nbrb.by/api/exrates/rates/292',      // Евро
   'https://www.nbrb.by/api/exrates/rates/145',      // Доллар США
-  'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
+  // 'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
   'https://www.nbrb.by/api/exrates/rates/310',      // Тайский бат
-  'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
-  'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
-  'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
+  // 'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
+  // 'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
+  // 'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
   'https://blockchain.info/ticker',                 // Bitcoin
 ];
 // !  Конец
@@ -89,6 +89,10 @@ const currenciesPattern = (data, transitionDelay) => {
 }
 
 const getRates = (list) => {
+  let plusNumber = 0.2;
+  if (window.innerWidth <= 535) {
+    plusNumber = 0.11;
+  }
   let transitionDelay = 0.2;
   currenciesBlock.innerHTML = '';
   list.forEach(url => {
@@ -96,7 +100,7 @@ const getRates = (list) => {
       .then(response => response.json())
       .then(data => {
         currenciesBlock.innerHTML += currenciesPattern(data, transitionDelay);
-        transitionDelay += 0.2;
+        transitionDelay += plusNumber;
       })
   })
 }

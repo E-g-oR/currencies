@@ -70,6 +70,12 @@ button {
   margin-top: 30px;
 }
 
+.converted {
+  font-size: 35px;
+  margin: 15px auto;
+  display: block;
+}
+
 .currency {
   background-color: #1d1d1d;
   background-color: #141414;
@@ -82,48 +88,6 @@ button {
   -webkit-transform: scale(0.75);
           transform: scale(0.75);
   opacity: 0;
-  -webkit-animation-name: fade-in;
-          animation-name: fade-in;
-  -webkit-animation-duration: 0.4s;
-          animation-duration: 0.4s;
-  -webkit-animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
-          animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-
-.hidden {
-  opacity: 0;
-  -webkit-transform: scale(0.75);
-          transform: scale(0.75);
-}
-
-@-webkit-keyframes fade-in {
-  0% {
-    -webkit-transform: scale(0.75);
-            transform: scale(0.75);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    -webkit-transform: scale(0.75);
-            transform: scale(0.75);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .currency__body {
@@ -184,6 +148,25 @@ button {
   padding: 7px 25px;
   background: #170e41;
   color: #fff;
+  opacity: 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+.currency,
+.clearLS {
+  -webkit-animation-name: fade-in;
+          animation-name: fade-in;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+  -webkit-animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
+          animation-timing-function: cubic-bezier(0.53, 0, 0.52, 1);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 
 .footer {
@@ -375,7 +358,37 @@ button {
   margin: 0;
 }
 
+@-webkit-keyframes fade-in {
+  0% {
+    -webkit-transform: scale(0.75);
+            transform: scale(0.75);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    -webkit-transform: scale(0.75);
+            transform: scale(0.75);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @media all and (max-width: 535px) {
+  .currency {
+    -webkit-animation-duration: 0.23s;
+            animation-duration: 0.23s;
+  }
   .currency__img {
     width: 40px;
     height: 40px;
