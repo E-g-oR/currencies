@@ -13,7 +13,8 @@ const URLRatesList = [
 // !  Конец
 
 const URLImagesList = ['img/usa.jpg', 'img/europe.jpg', 'img/thai.jpg', 'img/bit.jpg'];
-
+const topBarArrow = document.querySelector('.top-bar_arrow');
+const topBar = document.querySelector('.top-bar');
 const savingsBlock = document.querySelector('.savings');  //  блок со сбережениями
 const currenciesBlock = document.querySelector('.currencies');  //  блок с курсами валют
 const showFormButton = document.querySelector('.show-form-button'); //  кнопка, которая показывает форму
@@ -229,6 +230,10 @@ const init = () => {
 
   // ! ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ 
 
+
+  topBarArrow.addEventListener('click', () => {
+    topBar.classList.toggle('menu-active');
+  })
 
   showFormButton.addEventListener('click', () => {      //*   вызывает окно с формой
     popup.classList.add('active');

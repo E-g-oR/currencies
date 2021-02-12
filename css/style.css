@@ -39,8 +39,85 @@ button {
   padding: 0 20px;
 }
 
+.top-bar {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 50px;
+  background: black;
+  -webkit-backdrop-filter: blur(40px) saturate(1);
+          backdrop-filter: blur(40px) saturate(1);
+  -webkit-box-shadow: 0 10px 20px #070707b0;
+          box-shadow: 0 10px 20px #070707b0;
+  -webkit-transition: 0.56s cubic-bezier(0.71, 0.01, 0.28, 0.93);
+  transition: 0.56s cubic-bezier(0.71, 0.01, 0.28, 0.93);
+}
+
+.top-bar.menu-active {
+  min-height: 100vh;
+}
+
+.top-bar.menu-active .top-bar_arrow::after {
+  -webkit-transform: rotate(-38deg) translate(-11px, -10px);
+          transform: rotate(-38deg) translate(-11px, -10px);
+}
+
+.top-bar.menu-active .top-bar_arrow::before {
+  -webkit-transform: rotate(38deg) translate(10.8px, -10px);
+          transform: rotate(38deg) translate(10.8px, -10px);
+}
+
+.top-bar__body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 15px 0;
+}
+
+.top-bar_arrow {
+  position: relative;
+}
+
+.top-bar_arrow::after, .top-bar_arrow::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  width: 19.3px;
+  height: 1px;
+  -webkit-transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.top-bar_arrow::before {
+  -webkit-transform: rotate(38deg);
+          transform: rotate(38deg);
+  top: 30%;
+  left: 0;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+}
+
+.top-bar_arrow::after {
+  -webkit-transform: rotate(-38deg);
+          transform: rotate(-38deg);
+  top: 30%;
+  right: 0;
+  -webkit-transform-origin: right;
+          transform-origin: right;
+}
+
+.menu-button {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
 .header {
   text-align: center;
+  margin-top: 80px;
 }
 
 .savings {
@@ -170,7 +247,6 @@ button {
 }
 
 .footer {
-  position: fixed;
   width: 100%;
   left: 0;
   bottom: 0;
@@ -194,12 +270,13 @@ button {
 }
 
 .popup {
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
   -webkit-backdrop-filter: blur(30px);
           backdrop-filter: blur(30px);
   display: -webkit-box;
