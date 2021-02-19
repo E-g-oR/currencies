@@ -3,16 +3,16 @@
 const URLRatesList = [
   'https://www.nbrb.by/api/exrates/rates/292',      // Евро
   'https://www.nbrb.by/api/exrates/rates/145',      // Доллар США
-  // 'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
+  'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
   'https://www.nbrb.by/api/exrates/rates/310',      // Тайский бат
-  // 'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
-  // 'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
-  // 'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
+  'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
+  'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
+  'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
   'https://blockchain.info/ticker',                 // Bitcoin
 ];
 // !  Конец
 
-const URLImagesList = ['img/usa.jpg', 'img/europe.jpg', 'img/thai.jpg', 'img/bit.jpg'];
+const URLImagesList = ['img/united-states.svg', 'img/european-union.svg', 'img/thailand.svg', 'img/bitcoin-1.svg', 'img/russia.svg', 'img/switzerland.svg', 'img/turkey.svg', 'img/united-kingdom.svg'];
 const topBarArrow = document.querySelector('.top-bar_arrow');
 const topBar = document.querySelector('.top-bar');
 const savingsBlock = document.querySelector('.savings');  //  блок со сбережениями
@@ -56,13 +56,17 @@ const currenciesPattern = (data, transitionDelay) => {
   } else if (data.Cur_Abbreviation === 'EUR') {
     localStorage.setItem('EURRate', data.Cur_OfficialRate);
   }
-
-  const ImageURL = data.Cur_Abbreviation === 'USD' ? URLImagesList[0] :
-    data.Cur_Abbreviation === 'EUR' ? URLImagesList[1] :
-      data.Cur_Abbreviation === 'THB' ? URLImagesList[2] :
-        URLImagesList[3];
+  // console.log(data);
+  const ImageURL = data.Cur_ID === 145 ? URLImagesList[0] :
+    data.Cur_ID === 292 ? URLImagesList[1] :
+      data.Cur_ID === 310 ? URLImagesList[2] :
+        data.Cur_ID === 298 ? URLImagesList[4] :
+          data.Cur_ID === 130 ? URLImagesList[5] :
+            data.Cur_ID === 302 ? URLImagesList[6] :
+              data.Cur_ID === 143 ? URLImagesList[7] :
+              URLImagesList[3];
   if (data.Cur_Name) return `
-        <div class="currencies__item currency hidden" style="animation-delay: ${transitionDelay}s;">
+        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
@@ -75,7 +79,7 @@ const currenciesPattern = (data, transitionDelay) => {
         </div>
   `
   else return `
-        <div class="currencies__item currency hidden" style="animation-delay: ${transitionDelay}s;">
+        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">

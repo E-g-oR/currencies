@@ -45,7 +45,7 @@ button {
   top: 0;
   left: 0;
   width: 100vw;
-  min-height: 50px;
+  height: 60px;
   background: black;
   -webkit-backdrop-filter: blur(40px) saturate(1);
           backdrop-filter: blur(40px) saturate(1);
@@ -53,10 +53,12 @@ button {
           box-shadow: 0 10px 20px #070707b0;
   -webkit-transition: 0.56s cubic-bezier(0.71, 0.01, 0.28, 0.93);
   transition: 0.56s cubic-bezier(0.71, 0.01, 0.28, 0.93);
+  overflow: hidden;
+  border-bottom: 1px solid #191919;
 }
 
 .top-bar.menu-active {
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .top-bar.menu-active .top-bar_arrow::after {
@@ -74,6 +76,16 @@ button {
   display: -ms-flexbox;
   display: flex;
   padding: 15px 0;
+}
+
+.top-bar__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .top-bar_arrow {
@@ -288,8 +300,8 @@ button {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
   opacity: 0;
   visibility: hidden;
 }
@@ -306,8 +318,8 @@ button {
   color: #fff;
   text-align: center;
   padding: 30px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
   border-radius: 5px;
   -webkit-box-shadow: 0 10px 30px #070707;
           box-shadow: 0 10px 30px #070707;
