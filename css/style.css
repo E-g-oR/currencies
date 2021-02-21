@@ -169,7 +169,6 @@ button {
   background-color: #1d1d1d;
   background-color: #141414;
   max-width: 550px;
-  padding: 20px;
   margin: 0px auto 30px;
   border-radius: 5px;
   -webkit-transition: 0.3s cubic-bezier(0.53, 0, 0.52, 1);
@@ -186,6 +185,7 @@ button {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 20px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -447,6 +447,44 @@ button {
   margin: 0;
 }
 
+.chart-wrap {
+  margin-top: 10px;
+}
+
+/* Use this selector to override the line style on a given series */
+.ct-series-a .ct-line,
+.ct-series-a .ct-point {
+  stroke: #ffffff !important;
+}
+
+.ct-series-a .ct-line {
+  /* Set the colour of this series line */
+  /* Control the thikness of your lines */
+  stroke-width: 3px;
+  /* Create a dashed line with a pattern */
+}
+
+.ct-series-a .ct-area {
+  fill: #ffffff !important;
+  fill-opacity: 0.08;
+}
+
+.ct-label {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ct-series-a .ct-point {
+  /* Size of your points */
+  stroke-width: 8px;
+  stroke-linecap: circle;
+}
+
+.ct-grid {
+  stroke: rgba(255, 255, 255, 0.05) !important;
+  stroke-width: 2px;
+  stroke-dasharray: 8px;
+}
+
 @-webkit-keyframes fade-in {
   0% {
     -webkit-transform: scale(0.75);
@@ -478,12 +516,14 @@ button {
     -webkit-animation-duration: 0.23s;
             animation-duration: 0.23s;
   }
+  .currency__body {
+    padding: 15px;
+  }
   .currency__img {
-    width: 40px;
-    height: 40px;
+    height: 55px;
     -webkit-box-flex: 0;
-        -ms-flex: 0 0 40px;
-            flex: 0 0 40px;
+        -ms-flex: 0 0 55px;
+            flex: 0 0 55px;
   }
   .currency__title {
     font-size: 26px;
@@ -503,6 +543,15 @@ button {
   .currency {
     margin: 15px auto;
     padding: 10px;
+  }
+  .currency__body {
+    padding: 5px;
+  }
+  .currency__img {
+    height: 45px;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 45px;
+            flex: 0 0 45px;
   }
   .currency__content {
     margin-left: 10px;

@@ -1,18 +1,26 @@
 // const requestURL = 'https://www.nbrb.by/api/exrates/currencies';  //! Полный список валют на оф сайте нцбанка РБ
 // !  Адреса запросов по валютам
 const URLRatesList = [
-  'https://www.nbrb.by/api/exrates/rates/292',      // Евро
-  'https://www.nbrb.by/api/exrates/rates/145',      // Доллар США
-  'https://www.nbrb.by/api/exrates/rates/298',      // Российский рубль
-  'https://www.nbrb.by/api/exrates/rates/310',      // Тайский бат
-  'https://www.nbrb.by/api/exrates/rates/302',      // Турецкая лира
-  'https://www.nbrb.by/api/exrates/rates/130',      // Швейцарский франк
-  'https://www.nbrb.by/api/exrates/rates/143',      // Фунт стерлингов
-  'https://blockchain.info/ticker',                 // Bitcoin
+  'https://www.nbrb.by/api/exrates/rates/292',      //? Евро
+  'https://www.nbrb.by/api/exrates/rates/145',      //? Доллар США
+  'https://www.nbrb.by/api/exrates/rates/298',      //? Российский рубль
+  'https://www.nbrb.by/api/exrates/rates/310',      //? Тайский бат
+  'https://www.nbrb.by/api/exrates/rates/302',      //? Турецкая лира
+  'https://www.nbrb.by/api/exrates/rates/130',      //? Швейцарский франк
+  'https://www.nbrb.by/api/exrates/rates/143',      //? Фунт стерлингов
+  'https://blockchain.info/ticker',                 //? Bitcoin
 ];
 // !  Конец
 
-const URLImagesList = ['img/united-states.svg', 'img/european-union.svg', 'img/thailand.svg', 'img/bitcoin-1.svg', 'img/russia.svg', 'img/switzerland.svg', 'img/turkey.svg', 'img/united-kingdom.svg'];
+const URLImagesList = [
+  'img/united-states.svg',
+  'img/european-union.svg',
+  'img/thailand.svg',
+  'img/bitcoin-1.svg',
+  'img/russia.svg',
+  'img/switzerland.svg',
+  'img/turkey.svg',
+  'img/united-kingdom.svg'];
 const topBarArrow = document.querySelector('.top-bar_arrow');
 const topBar = document.querySelector('.top-bar');
 const savingsBlock = document.querySelector('.savings');  //  блок со сбережениями
@@ -26,7 +34,6 @@ const inputPattern = /\D/g;
 const footerDate = document.querySelector('.footer__date');
 const convertedElem = document.querySelector('.converted');
 const clearLS = document.querySelector('.clearLS');
-var currenciesItemList = document.getElementsByClassName('currency');
 
 
 const popupRemove = () => {
@@ -36,6 +43,51 @@ const popupRemove = () => {
 }
 
 const currencyTypes = ['USD', 'EUR', 'BYN'];
+
+
+var ratesStatistics = []
+
+// TODO тестовые данные для графика
+const chartTestData = {
+  labels: ['02.13', '02.14', '02.15', '02.16', '02.17', '02.18', '02.19', '02.20'],
+  series: [
+    ['3.8783', '3.5216', '3.983', '3.6125', '3.1930', '3.1736', '3.7263', '3.4172',]
+  ]
+}
+var options = {
+  // не отрисовывать точки линейного графика
+  showPoint: true,
+  // Отключение сглаживания линий
+  lineSmooth: false,
+  // Настройки X-оси
+  showArea: true,
+  axisX: {
+    // Отключаем сетку для этой оси
+    // offset: 60,
+    showGrid: true,
+    // и не показываем метки
+    showLabel: true
+  },
+  // настройки Y-оси 
+  axisY: {
+    // Смещение от меток
+    // offset: 40,
+    // Функция интерполяции метки позволяет менять значение метки,
+    // в текущем примере появляются миллионы "m".
+    // labelInterpolationFnc: function (value) {
+    //   return '' + value + 'm';
+    // }
+  }
+};
+
+var chartData = {
+  // Массив меток, который содержит любые значения
+  labels: [],
+  // Наш массив может содержать серию объектов или серии массивов с данными
+  series: [
+    []
+  ]
+};
 
 const savingPattern = (data) => {
   return `        
@@ -47,16 +99,76 @@ const savingPattern = (data) => {
     </div>`
 }
 
+const getStatisticsRequest = (URLStatisticsList) => {
+  URLStatisticsList.forEach(statisticsURL => {
+    fetch(statisticsURL)
+      .then(response => response.json())
+      .then(data => {
+        // console.log(data);
+        let objectCurId = data[0].Cur_ID;
+        // console.log(objectCurId);
+        ratesStatistics.forEach(elem => {
+          if (elem.Cur_ID === objectCurId) {
+            elem.statistics = data;
+          }
+        })
+        //         console.log(`Курс неделю назад: ${data[0].Cur_OfficialRate};
+        // Курс сегодня: ${data[data.length - 1].Cur_OfficialRate};`);
+      })
+  })
+}
 
 
-const currenciesPattern = (data, transitionDelay) => {
+
+function getStatistics(searchName, currencyElem) {
+  // const previousChart = document.getElementById('linear');
+  // if (previousChart) {
+  //   console.log(previousChart);
+  // }
+  // console.log(searchName);
+  // console.log(ratesStatistics);
+  console.log(currencyElem.lastChild);
+
+  if (currencyElem.lastChild.classList) {
+    currencyElem.lastChild.remove();
+  } else {
+    if (searchName === "Батов") return false
+    else {
+      ratesStatistics.forEach(elem => {
+        if (elem.Cur_Name === searchName) {
+
+          console.log(elem);
+          const chartHTML = `<div class="chart-wrap"><div class="ct-chart" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
+          const elemStatistics = elem.statistics;
+          chartData.labels = [];
+          chartData.series[0] = [];
+          elemStatistics.forEach(statisticsElem => {
+            // console.log(statisticsElem);
+            const shortDate = statisticsElem.Date.slice(5, 10).replace('-', '.');
+            // console.log(shortDate);
+            statisticsElem.Date = shortDate;
+            chartData.labels.push(shortDate);
+            chartData.series[0].push(statisticsElem.Cur_OfficialRate);
+          })
+          currencyElem.innerHTML += chartHTML;
+          new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
+        }
+      })
+    }
+  }
+
+  // console.dir(chartData);
+
+}
+
+
+const currenciesPattern = (data, transitionDelay) => {        //? шаблон элемента с курсом валют: записывает курс евро и доллара, добавляет объект в массив со статистикой
   if ((data.Cur_Abbreviation === 'USD')) {
     localStorage.setItem('USDRate', data.Cur_OfficialRate);
-    // setSavings.getRatesToConvert(data.Cur_Abbreviation, data.Cur_OfficialRate);
   } else if (data.Cur_Abbreviation === 'EUR') {
     localStorage.setItem('EURRate', data.Cur_OfficialRate);
   }
-  // console.log(data);
+
   const ImageURL = data.Cur_ID === 145 ? URLImagesList[0] :
     data.Cur_ID === 292 ? URLImagesList[1] :
       data.Cur_ID === 310 ? URLImagesList[2] :
@@ -64,8 +176,15 @@ const currenciesPattern = (data, transitionDelay) => {
           data.Cur_ID === 130 ? URLImagesList[5] :
             data.Cur_ID === 302 ? URLImagesList[6] :
               data.Cur_ID === 143 ? URLImagesList[7] :
-              URLImagesList[3];
-  if (data.Cur_Name) return `
+                URLImagesList[3];
+  if (data.Cur_Name) {
+    ratesStatistics.push({
+      Cur_ID: data.Cur_ID,
+      Cur_Name: data.Cur_Name,
+      Cur_Abbreviation: data.Cur_Abbreviation,
+      Cur_RateToday: data.Cur_OfficialRate
+    });
+    return `
         <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
@@ -78,6 +197,7 @@ const currenciesPattern = (data, transitionDelay) => {
           </div>
         </div>
   `
+  }
   else return `
         <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
@@ -93,12 +213,15 @@ const currenciesPattern = (data, transitionDelay) => {
   `
 }
 
+
+
 const getRates = (list) => {
   let plusNumber = 0.2;
   if (window.innerWidth <= 535) {
     plusNumber = 0.11;
   }
   let transitionDelay = 0.2;
+  // TODO убрать коменты
   currenciesBlock.innerHTML = '';
   list.forEach(url => {
     fetch(url)
@@ -204,39 +327,37 @@ const setSavings = {
 }
 
 
+
+
+
 // !  Функция инициализации (все события и прочее)
 const init = () => {
   setSavings.getSaves();
   getRates(URLRatesList);
-  // setSavings.getRatesToConvert();
+  // console.log(ratesStatistics);
 
-
-  // ! ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲
-
-  // var todayObj = new Date();    //  создаю новый объект даты на сегодняшнее число
-  // var todayStr = todayObj.toISOString();    //  перевожу в формат "2021-02-09T15:49:39.773Z"
-  // var todayShort = todayStr.slice(0, 10);   //  получаю сегодняшнее число — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
-  // var firstDayOfYear = new Date();    // создаю еще один обьект Даты, чтобы получить первый день года (первое января)
-  // firstDayOfYear.setMonth(firstDayOfYear.getMonth() - firstDayOfYear.getMonth());   //  отнимаю число месяцев (получаю 0 - январь)
-  // firstDayOfYear.setDate(firstDayOfYear.getDate() - firstDayOfYear.getDate() + 1);    //  отнимаю число дней + 1 (получаю 1-е число)
-  // var firstDayOfYearStr = firstDayOfYear.toISOString();   //  перевожу в формат "2021-02-09T15:49:39.773Z"
-  // var firstDayOfYearShort = firstDayOfYearStr.slice(0, 10);   //  получаю начало года — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
-  // console.log(`Сегодня: ${todayShort}`);
-  // console.log(`Первого января: ${firstDayOfYearShort}`);
-  // const dynamicURL = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/145?startDate=${firstDayOfYearShort}&endDate=${todayShort}`;
-  // fetch(dynamicURL)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log(data);
-  //     console.log(data[0].Cur_OfficialRate);
-  //     console.log(data[data.length - 1].Cur_OfficialRate);
-  //   })
-
-  // ! ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ 
+  // console.log(chartTestData);
+  // new Chartist.Line('#linear', chartTestData, testOptions);
 
 
   topBarArrow.addEventListener('click', () => {
     topBar.classList.toggle('menu-active');
+  })
+
+  currenciesBlock.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.closest('.currency')) {
+      const currencyElem = target.closest('.currency');
+      let currencyElemTextContent = currencyElem.textContent;
+      currencyElemTextContent = currencyElemTextContent.replace(/\s+/g, ' ').trim(); //! удаляет все лишние пробелы
+      // console.log(currencyElemTextContent);
+      const ratePosIndex = currencyElemTextContent.indexOf("Текущий курс"); //! находит место "Текущий курс"     8
+      // !   8
+      // console.log(ratePosIndex);
+      const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
+      console.log(currencyName);
+      getStatistics(currencyName, currencyElem);
+    }
   })
 
   showFormButton.addEventListener('click', () => {      //*   вызывает окно с формой
@@ -277,6 +398,34 @@ const init = () => {
   });
 
   footerDate.textContent = new Date().toDateString();
+
+
+
+
+
+  // ! ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲
+  const todayObj = new Date();    //  сегодня, объект...   создаю новый объект даты на сегодняшнее число
+  const todayStr = todayObj.toISOString();    //  сегодня, длинный строчный формат...   перевожу в формат "2021-02-09T15:49:39.773Z"
+  const todayShort = todayStr.slice(0, 10);   //  сегодня, короткая форма....   получаю сегодняшнее число — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
+  var firstDayOfYear = new Date();    // сегодня, объект (еще один)...   создаю еще один обьект Даты, чтобы получить первый день года (первое января)
+  // firstDayOfYear.setMonth(firstDayOfYear.getMonth() - firstDayOfYear.getMonth());   //*  отнимаю число месяцев (получаю 0 - январь)
+  firstDayOfYear.setDate(firstDayOfYear.getDate() - 7);    //*  начало периода (перевожу число на 7 дней назад [для статистики за неделю])...    отнимаю число дней + 1 (получаю 1-е число)
+  var firstDayOfYearStr = firstDayOfYear.toISOString();   //  начало периода, длинный строчный формат...   перевожу в формат "2021-02-09T15:49:39.773Z"
+  var firstDayOfYearShort = firstDayOfYearStr.slice(0, 10);   //  начало периода, короткая форма....    получаю начало года — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
+  // console.log(`Сегодня: ${todayShort}`);
+  // console.log(`Первого января: ${firstDayOfYearShort}`);
+  const dynamicURL = `https://www.nbrb.by/API/ExRates/Rates/Dynamics/145?startDate=${firstDayOfYearShort}&endDate=${todayShort}`;
+  const URLStatisticsList = [
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/292?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Евро
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/145?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Доллар США
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/298?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Российский рубль
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/302?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Турецкая лира
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/130?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Швейцарский франк
+    `https://www.nbrb.by/API/ExRates/Rates/Dynamics/143?startDate=${firstDayOfYearShort}&endDate=${todayShort}`,      //? Фунт стерлингов
+  ];
+  getStatisticsRequest(URLStatisticsList);
+  // ! ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼
+  // console.log(ratesStatistics);
 }
 // !  конец
 
