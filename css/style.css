@@ -169,7 +169,7 @@ button {
   background-color: #1d1d1d;
   background-color: #141414;
   max-width: 550px;
-  margin: 0px auto 30px;
+  margin: 0px auto 22px;
   border-radius: 5px;
   -webkit-transition: 0.3s cubic-bezier(0.53, 0, 0.52, 1);
   transition: 0.3s cubic-bezier(0.53, 0, 0.52, 1);
@@ -218,12 +218,12 @@ button {
 }
 
 .currency__title {
-  font-size: 32px;
+  font-size: 27px;
   font-weight: 400;
 }
 
 .currrency__text {
-  line-height: 35px;
+  line-height: 30px;
 }
 
 .currency__rate {
@@ -511,6 +511,12 @@ button {
   }
 }
 
+@media all and (max-width: 585px) {
+  .currency__title {
+    font-size: 24px;
+  }
+}
+
 @media all and (max-width: 535px) {
   .currency {
     -webkit-animation-duration: 0.23s;
@@ -524,9 +530,6 @@ button {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 55px;
             flex: 0 0 55px;
-  }
-  .currency__title {
-    font-size: 26px;
   }
   .popup__window {
     margin-top: -180px;

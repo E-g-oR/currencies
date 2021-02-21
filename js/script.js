@@ -63,7 +63,7 @@ var options = {
   showArea: true,
   axisX: {
     // Отключаем сетку для этой оси
-    // offset: 60,
+    offset: 10,
     showGrid: true,
     // и не показываем метки
     showLabel: true
@@ -71,7 +71,7 @@ var options = {
   // настройки Y-оси 
   axisY: {
     // Смещение от меток
-    // offset: 40,
+    offset: 45,
     // Функция интерполяции метки позволяет менять значение метки,
     // в текущем примере появляются миллионы "m".
     // labelInterpolationFnc: function (value) {
@@ -127,7 +127,6 @@ function getStatistics(searchName, currencyElem) {
   // }
   // console.log(searchName);
   // console.log(ratesStatistics);
-  console.log(currencyElem.lastChild);
 
   if (currencyElem.lastChild.classList) {
     currencyElem.lastChild.remove();
@@ -151,7 +150,50 @@ function getStatistics(searchName, currencyElem) {
             chartData.series[0].push(statisticsElem.Cur_OfficialRate);
           })
           currencyElem.innerHTML += chartHTML;
-          new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
+          const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
+          // Let's put a sequence number aside so we can use it in the event callbacks
+          var seq = 0;
+
+          // Once the chart is fully created we reset the sequence
+          chartDraw.on('created', function () {
+            seq = 0;
+          });
+          chartDraw.on('draw', function (data) {
+            if (data.type === 'line' || data.type === 'area') {
+              data.element.animate({
+                d: {
+                  begin: 2000 * data.index,
+                  dur: 2000,
+                  from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                  to: data.path.clone().stringify(),
+                  easing: Chartist.Svg.Easing.easeOutQuint
+                }
+              });
+            }
+            if (data.type === 'point') {
+              // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+              data.element.animate({
+                opacity: {
+                  // The delay when we like to start the animation
+                  begin: seq++ * 80,
+                  // Duration of the animation
+                  dur: 500,
+                  // The value where the animation should start
+                  from: 0,
+                  // The value where it should end
+                  to: 1
+                },
+                y1: {
+                  // begin: seq++ * 80,
+                  dur: 500,
+                  from: data.y + 100,
+                  to: data.y,
+                  // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
+                  easing: Chartist.Svg.Easing.easeOutQuart
+                }
+              });
+            }
+          });
         }
       })
     }
