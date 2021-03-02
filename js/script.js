@@ -48,12 +48,12 @@ const currencyTypes = ['USD', 'EUR', 'BYN'];
 var ratesStatistics = []
 
 // TODO тестовые данные для графика
-const chartTestData = {
-  labels: ['02.13', '02.14', '02.15', '02.16', '02.17', '02.18', '02.19', '02.20'],
-  series: [
-    ['3.8783', '3.5216', '3.983', '3.6125', '3.1930', '3.1736', '3.7263', '3.4172',]
-  ]
-}
+// const chartTestData = {
+//   labels: ['02.13', '02.14', '02.15', '02.16', '02.17', '02.18', '02.19', '02.20'],
+//   series: [
+//     ['3.8783', '3.5216', '3.983', '3.6125', '3.1930', '3.1736', '3.7263', '3.4172',]
+//   ]
+// }
 var options = {
   // не отрисовывать точки линейного графика
   showPoint: true,
@@ -80,14 +80,7 @@ var options = {
   }
 };
 
-var chartData = {
-  // Массив меток, который содержит любые значения
-  labels: [],
-  // Наш массив может содержать серию объектов или серии массивов с данными
-  series: [
-    []
-  ]
-};
+
 
 const savingPattern = (data) => {
   return `        
@@ -127,7 +120,14 @@ function getStatistics(searchName, currencyElem) {
   // }
   // console.log(searchName);
   // console.log(ratesStatistics);
-
+  var chartData = {
+    // Массив меток, который содержит любые значения
+    labels: [],
+    // Наш массив может содержать серию объектов или серии массивов с данными
+    series: [
+      []
+    ]
+  };
   if (currencyElem.lastChild.classList) {
     currencyElem.lastChild.remove();
   } else {
@@ -136,7 +136,7 @@ function getStatistics(searchName, currencyElem) {
       ratesStatistics.forEach(elem => {
         if (elem.Cur_Name === searchName) {
 
-          console.log(elem);
+          // console.log(elem);
           const chartHTML = `<div class="chart-wrap"><div class="ct-chart" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
           const elemStatistics = elem.statistics;
           chartData.labels = [];
@@ -150,6 +150,7 @@ function getStatistics(searchName, currencyElem) {
             chartData.series[0].push(statisticsElem.Cur_OfficialRate);
           })
           currencyElem.innerHTML += chartHTML;
+          // console.log(Chartist.Svg.Easing);
           const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
           // Let's put a sequence number aside so we can use it in the event callbacks
           var seq = 0;
@@ -162,11 +163,11 @@ function getStatistics(searchName, currencyElem) {
             if (data.type === 'line' || data.type === 'area') {
               data.element.animate({
                 d: {
-                  begin: 2000 * data.index,
+                  begin: 300,
                   dur: 2000,
                   from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
                   to: data.path.clone().stringify(),
-                  easing: Chartist.Svg.Easing.easeOutQuint
+                  easing: Chartist.Svg.Easing.easeOutQuint// ['0.2', '0.3', '0.69', '0.99'] //.25,.56,.69,.99
                 }
               });
             }
@@ -185,7 +186,7 @@ function getStatistics(searchName, currencyElem) {
                 },
                 y1: {
                   // begin: seq++ * 80,
-                  dur: 500,
+                  dur: 750,
                   from: data.y + 100,
                   to: data.y,
                   // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
@@ -219,6 +220,7 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
             data.Cur_ID === 302 ? URLImagesList[6] :
               data.Cur_ID === 143 ? URLImagesList[7] :
                 URLImagesList[3];
+  console.log(data);
   if (data.Cur_Name) {
     ratesStatistics.push({
       Cur_ID: data.Cur_ID,
@@ -397,7 +399,7 @@ const init = () => {
       // !   8
       // console.log(ratePosIndex);
       const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
-      console.log(currencyName);
+      // console.log(currencyName);
       getStatistics(currencyName, currencyElem);
     }
   })
