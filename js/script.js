@@ -120,6 +120,7 @@ function getStatistics(searchName, currencyElem) {
   // }
   // console.log(searchName);
   // console.log(ratesStatistics);
+  let addRowsNewArray = [];
   var chartData = {
     // Массив меток, который содержит любые значения
     labels: [],
@@ -136,71 +137,111 @@ function getStatistics(searchName, currencyElem) {
       ratesStatistics.forEach(elem => {
         if (elem.Cur_Name === searchName) {
 
-          // console.log(elem);
-          const chartHTML = `<div class="chart-wrap"><div class="ct-chart" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
+
+          // console.log();
+          // const chartHTML = `<div class="chart-wrap"><div class="ct-chart" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
+          const chartHTML = `<div class="chart-wrap"><div class="ct-chart chart_div" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
           const elemStatistics = elem.statistics;
           chartData.labels = [];
           chartData.series[0] = [];
           elemStatistics.forEach(statisticsElem => {
+            // console.log(statisticsElem);
             // console.log(statisticsElem);
             const shortDate = statisticsElem.Date.slice(5, 10).replace('-', '.');
             // console.log(shortDate);
             statisticsElem.Date = shortDate;
             chartData.labels.push(shortDate);
             chartData.series[0].push(statisticsElem.Cur_OfficialRate);
+            addRowsNewArray.push([shortDate, statisticsElem.Cur_OfficialRate])
           })
+          // Load the Visualization API and the corechart package.
+          google.charts.load('current', { 'packages': ['corechart'] });
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.charts.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows(addRowsNewArray);
+            console.log(data);
+            // Set chart options
+            var options = {
+              'title': 'How Much Pizza I Ate Last Night',
+              // 'width': 500,
+              // 'height': 200,
+              'is3D': false,
+              animation: {
+                duration: 3000,
+                easing: 'out',
+              },
+              'colors': ['#000']
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.AreaChart(document.getElementById(`${elem.Cur_Abbreviation}-linear-chart`));
+            chart.draw(data, options);
+          }
           currencyElem.innerHTML += chartHTML;
           // console.log(Chartist.Svg.Easing);
-          const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
+          // ! const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
           // Let's put a sequence number aside so we can use it in the event callbacks
-          var seq = 0;
+          // var seq = 0; //*
 
           // Once the chart is fully created we reset the sequence
-          chartDraw.on('created', function () {
-            seq = 0;
-          });
-          chartDraw.on('draw', function (data) {
-            if (data.type === 'line' || data.type === 'area') {
-              data.element.animate({
-                d: {
-                  begin: 300,
-                  dur: 2000,
-                  from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                  to: data.path.clone().stringify(),
-                  easing: Chartist.Svg.Easing.easeOutQuint// ['0.2', '0.3', '0.69', '0.99'] //.25,.56,.69,.99
-                }
-              });
-            }
-            if (data.type === 'point') {
-              // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
-              data.element.animate({
-                opacity: {
-                  // The delay when we like to start the animation
-                  begin: seq++ * 80,
-                  // Duration of the animation
-                  dur: 500,
-                  // The value where the animation should start
-                  from: 0,
-                  // The value where it should end
-                  to: 1
-                },
-                y1: {
-                  // begin: seq++ * 80,
-                  dur: 750,
-                  from: data.y + 100,
-                  to: data.y,
-                  // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
-                  easing: Chartist.Svg.Easing.easeOutQuart
-                }
-              });
-            }
-          });
+          // *----------------------------------
+          // chartDraw.on('created', function () {
+          //   seq = 0;
+          // });
+          // chartDraw.on('draw', function (data) {
+          //   if (data.type === 'line' || data.type === 'area') {
+          //     data.element.animate({
+          //       d: {
+          //         begin: 300,
+          //         dur: 2000,
+          //         from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+          //         to: data.path.clone().stringify(),
+          //         easing: Chartist.Svg.Easing.easeOutQuint// ['0.2', '0.3', '0.69', '0.99'] //.25,.56,.69,.99
+          //       }
+          //     });
+          //   }
+          //   if (data.type === 'point') {
+          //     // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+          //     data.element.animate({
+          //       opacity: {
+          //         // The delay when we like to start the animation
+          //         begin: seq++ * 80,
+          //         // Duration of the animation
+          //         dur: 500,
+          //         // The value where the animation should start
+          //         from: 0,
+          //         // The value where it should end
+          //         to: 1
+          //       },
+          //       y1: {
+          //         // begin: seq++ * 80,
+          //         dur: 750,
+          //         from: data.y + 100,
+          //         to: data.y,
+          //         // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
+          //         easing: Chartist.Svg.Easing.easeOutQuart
+          //       }
+          //     });
+          //   }
+          // });
+          // *----------------------------------
         }
       })
     }
   }
 
-  // console.dir(chartData);
+  console.dir(addRowsNewArray);
 
 }
 
@@ -220,7 +261,7 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
             data.Cur_ID === 302 ? URLImagesList[6] :
               data.Cur_ID === 143 ? URLImagesList[7] :
                 URLImagesList[3];
-  console.log(data);
+  // console.log(data);
   if (data.Cur_Name) {
     ratesStatistics.push({
       Cur_ID: data.Cur_ID,
