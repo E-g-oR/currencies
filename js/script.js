@@ -114,21 +114,8 @@ const getStatisticsRequest = (URLStatisticsList) => {
 
 
 function getStatistics(searchName, currencyElem) {
-  // const previousChart = document.getElementById('linear');
-  // if (previousChart) {
-  //   console.log(previousChart);
-  // }
-  // console.log(searchName);
-  // console.log(ratesStatistics);
-  let addRowsNewArray = [];
-  var chartData = {
-    // Массив меток, который содержит любые значения
-    labels: [],
-    // Наш массив может содержать серию объектов или серии массивов с данными
-    series: [
-      []
-    ]
-  };
+  var data = [];
+  var labels = [];
   if (currencyElem.lastChild.classList) {
     currencyElem.lastChild.remove();
   } else {
@@ -136,112 +123,91 @@ function getStatistics(searchName, currencyElem) {
     else {
       ratesStatistics.forEach(elem => {
         if (elem.Cur_Name === searchName) {
-
-
-          // console.log();
-          // const chartHTML = `<div class="chart-wrap"><div class="ct-chart" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
-          const chartHTML = `<div class="chart-wrap"><div class="ct-chart chart_div" id="${elem.Cur_Abbreviation}-linear-chart"></div></div>`;
+          const chartHTML = `<div class="chart-wrap"><canvas class="ct-chart chart_div" id="${elem.Cur_Abbreviation}-linear-chart"></canvas></div>`;
           const elemStatistics = elem.statistics;
-          chartData.labels = [];
-          chartData.series[0] = [];
+          // chartData.labels = [];
+          // chartData.series[0] = [];
           elemStatistics.forEach(statisticsElem => {
-            // console.log(statisticsElem);
-            // console.log(statisticsElem);
             const shortDate = statisticsElem.Date.slice(5, 10).replace('-', '.');
-            // console.log(shortDate);
             statisticsElem.Date = shortDate;
-            chartData.labels.push(shortDate);
-            chartData.series[0].push(statisticsElem.Cur_OfficialRate);
-            addRowsNewArray.push([shortDate, statisticsElem.Cur_OfficialRate])
+            // chartData.labels.push(shortDate); //? chartist.js
+            labels.push(shortDate); //! chart.js
+            data.push(statisticsElem.Cur_OfficialRate); //! chart.js
+            // chartData.series[0].push(statisticsElem.Cur_OfficialRate); //? chartist.js
+            // addRowsNewArray.push([shortDate, statisticsElem.Cur_OfficialRate]) //* google charts
           })
-          // Load the Visualization API and the corechart package.
-          google.charts.load('current', { 'packages': ['corechart'] });
-
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.charts.setOnLoadCallback(drawChart);
-
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
-
-            // Create the data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
-            data.addRows(addRowsNewArray);
-            console.log(data);
-            // Set chart options
-            var options = {
-              'title': 'How Much Pizza I Ate Last Night',
-              // 'width': 500,
-              // 'height': 200,
-              'is3D': false,
-              animation: {
-                duration: 3000,
-                easing: 'out',
-              },
-              'colors': ['#000']
-            };
-
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.AreaChart(document.getElementById(`${elem.Cur_Abbreviation}-linear-chart`));
-            chart.draw(data, options);
-          }
           currencyElem.innerHTML += chartHTML;
-          // console.log(Chartist.Svg.Easing);
           // ! const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
-          // Let's put a sequence number aside so we can use it in the event callbacks
-          // var seq = 0; //*
+          var ctx = document.getElementById(`${elem.Cur_Abbreviation}-linear-chart`).getContext("2d");
 
-          // Once the chart is fully created we reset the sequence
-          // *----------------------------------
-          // chartDraw.on('created', function () {
-          //   seq = 0;
-          // });
-          // chartDraw.on('draw', function (data) {
-          //   if (data.type === 'line' || data.type === 'area') {
-          //     data.element.animate({
-          //       d: {
-          //         begin: 300,
-          //         dur: 2000,
-          //         from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-          //         to: data.path.clone().stringify(),
-          //         easing: Chartist.Svg.Easing.easeOutQuint// ['0.2', '0.3', '0.69', '0.99'] //.25,.56,.69,.99
-          //       }
-          //     });
-          //   }
-          //   if (data.type === 'point') {
-          //     // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
-          //     data.element.animate({
-          //       opacity: {
-          //         // The delay when we like to start the animation
-          //         begin: seq++ * 80,
-          //         // Duration of the animation
-          //         dur: 500,
-          //         // The value where the animation should start
-          //         from: 0,
-          //         // The value where it should end
-          //         to: 1
-          //       },
-          //       y1: {
-          //         // begin: seq++ * 80,
-          //         dur: 750,
-          //         from: data.y + 100,
-          //         to: data.y,
-          //         // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
-          //         easing: Chartist.Svg.Easing.easeOutQuart
-          //       }
-          //     });
-          //   }
-          // });
-          // *----------------------------------
+          var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+          gradientStroke.addColorStop(0, "#80b6f4");
+          gradientStroke.addColorStop(1, "#f49080");
+          var gradientFill = ctx.createLinearGradient(0, 0, 0, 350);
+          gradientFill.addColorStop(0, "rgba(255, 255, 255, 0.3)");
+          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.005)");
+          var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: `${elem.Cur_Abbreviation}`,
+                borderColor: "#fff",
+                pointBorderColor: "#fff",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "#fff",
+                pointBorderWidth: 0,
+                pointHoverRadius: 5,
+                pointHoverBorderWidth: 1,
+                pointRadius: 0,
+                fill: true,
+                backgroundColor: gradientFill,
+                borderWidth: 2,
+                data: data
+              }]
+            },
+            options: {
+              legend: {
+                position: "bottom"
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    display: true,
+                    fontColor: "rgba(255,255,255,0.5)",
+                    fontStyle: "normal",
+                    // beginAtZero: true,
+                    // maxTicksLimit: 5,
+                    padding: 20
+                  },
+                  gridLines: {
+                    drawTicks: true,
+                    display: true
+                  }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    zeroLineColor: "transparent"
+                  },
+                  ticks: {
+                    display: false,
+                    fontColor: "rgba(255,255,255,0.5)",
+                    padding: 20,
+                    // fontColor: "rgba(0,0,0,0.5)",
+                    fontStyle: "normal"
+                  }
+                }]
+              }
+            }
+          });
         }
       })
+
     }
   }
 
-  console.dir(addRowsNewArray);
+  // console.dir(addRowsNewArray);
 
 }
 
@@ -494,7 +460,7 @@ const init = () => {
   const todayShort = todayStr.slice(0, 10);   //  сегодня, короткая форма....   получаю сегодняшнее число — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
   var firstDayOfYear = new Date();    // сегодня, объект (еще один)...   создаю еще один обьект Даты, чтобы получить первый день года (первое января)
   // firstDayOfYear.setMonth(firstDayOfYear.getMonth() - firstDayOfYear.getMonth());   //*  отнимаю число месяцев (получаю 0 - январь)
-  firstDayOfYear.setDate(firstDayOfYear.getDate() - 7);    //*  начало периода (перевожу число на 7 дней назад [для статистики за неделю])...    отнимаю число дней + 1 (получаю 1-е число)
+  firstDayOfYear.setDate(firstDayOfYear.getDate() - 50);    //*  начало периода (перевожу число на 7 дней назад [для статистики за неделю])...    отнимаю число дней + 1 (получаю 1-е число)
   var firstDayOfYearStr = firstDayOfYear.toISOString();   //  начало периода, длинный строчный формат...   перевожу в формат "2021-02-09T15:49:39.773Z"
   var firstDayOfYearShort = firstDayOfYearStr.slice(0, 10);   //  начало периода, короткая форма....    получаю начало года — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
   // console.log(`Сегодня: ${todayShort}`);
