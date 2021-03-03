@@ -146,7 +146,8 @@ function getStatistics(searchName, currencyElem) {
           var gradientFill = ctx.createLinearGradient(0, 0, 0, 350);
           gradientFill.addColorStop(0, "rgba(255, 255, 255, 0.3)");
           gradientFill.addColorStop(0.3, "rgba(255, 255, 255, 0.1)");
-          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.001)");
+          gradientFill.addColorStop(0.7, "rgba(255, 255, 255, 0.005)");
+          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.00001)");
           var myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -158,10 +159,10 @@ function getStatistics(searchName, currencyElem) {
                 pointBackgroundColor: "#fff",
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "#fff",
-                pointBorderWidth: 0,
+                pointBorderWidth: 3,
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 1,
-                pointRadius: 0,
+                pointRadius: 2,
                 fill: true,
                 backgroundColor: gradientFill,
                 borderWidth: 2,

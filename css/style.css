@@ -160,7 +160,7 @@ button {
 }
 
 .converted {
-  font-size: 35px;
+  font-size: 55px;
   margin: 15px auto;
   display: block;
 }
@@ -540,6 +540,9 @@ button {
 }
 
 @media all and (max-width: 465px) {
+  .converted {
+    font-size: 45px;
+  }
   body {
     font-size: 15px;
   }
@@ -567,11 +570,17 @@ button {
   }
 }
 
-@media all and (max-width: 360px) {
+@media all and (max-width: 385px) {
   body {
     font-size: 14px;
   }
   .currency__title {
     font-size: 17px;
+  }
+}
+
+@media all and (max-width: 345px) {
+  .currency__title {
+    font-size: 15px;
   }
 }
