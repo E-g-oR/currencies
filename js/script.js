@@ -145,7 +145,8 @@ function getStatistics(searchName, currencyElem) {
           gradientStroke.addColorStop(1, "#f49080");
           var gradientFill = ctx.createLinearGradient(0, 0, 0, 350);
           gradientFill.addColorStop(0, "rgba(255, 255, 255, 0.3)");
-          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.005)");
+          gradientFill.addColorStop(0.3, "rgba(255, 255, 255, 0.1)");
+          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.001)");
           var myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -460,7 +461,7 @@ const init = () => {
   const todayShort = todayStr.slice(0, 10);   //  сегодня, короткая форма....   получаю сегодняшнее число — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
   var firstDayOfYear = new Date();    // сегодня, объект (еще один)...   создаю еще один обьект Даты, чтобы получить первый день года (первое января)
   // firstDayOfYear.setMonth(firstDayOfYear.getMonth() - firstDayOfYear.getMonth());   //*  отнимаю число месяцев (получаю 0 - январь)
-  firstDayOfYear.setDate(firstDayOfYear.getDate() - 50);    //*  начало периода (перевожу число на 7 дней назад [для статистики за неделю])...    отнимаю число дней + 1 (получаю 1-е число)
+  firstDayOfYear.setDate(firstDayOfYear.getDate() - 20);    //*  начало периода (перевожу число на 7 дней назад [для статистики за неделю])...    отнимаю число дней + 1 (получаю 1-е число)
   var firstDayOfYearStr = firstDayOfYear.toISOString();   //  начало периода, длинный строчный формат...   перевожу в формат "2021-02-09T15:49:39.773Z"
   var firstDayOfYearShort = firstDayOfYearStr.slice(0, 10);   //  начало периода, короткая форма....    получаю начало года — копирую нужные мне отрезки (с 0-ой до 10 позиции) "2021-02-09"
   // console.log(`Сегодня: ${todayShort}`);
