@@ -368,9 +368,6 @@ button {
   left: 0;
   bottom: 0;
   text-align: center;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
 }
 
 .show-form-button,
@@ -438,6 +435,7 @@ button {
 }
 
 .popup__title {
+  font-weight: normal;
   font-size: 24px;
   line-height: 28px;
   letter-spacing: 0.15px;
@@ -722,6 +720,29 @@ button {
   }
   .show-form-button,
   .form-send-button {
+    color: #fff;
     background: #6200ee;
+  }
+  .popup__window {
+    color: rgba(0, 0, 0, 0.87);
+    background: #fff;
+    -webkit-box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #5555553d;
+  }
+  .popup__title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .input {
+    color: #6200ee;
+  }
+  .input-line::before {
+    background-color: #6200ee;
+  }
+  .radio-style {
+    border: 2px solid #6200ee;
+  }
+  .radio-style::before {
+    background-color: #6200ee;
   }
 }
