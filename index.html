@@ -7,7 +7,7 @@
   <link rel="icon" href="img/icons/favico.svg">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>MyCurrencies</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"> </script>
@@ -43,12 +43,12 @@
   <div class="top-bar">
     <div class="container">
       <div class="top-bar__body">
-        <div class="top-bar_button top-bar_arrow menu-button">
+        <button class="top-bar_button top-bar_arrow menu-button ripple__button">
 
-        </div>
+        </button>
       </div>
       <div class="top-bar__content">
-        <button class="show-form-button">Добавить сбережения</button>
+        <button class="show-form-button ripple__button">Добавить сбережения</button>
         <div class="footer__bottom">
           <span class="footer__date">27.01.2021</span>
         </div>
@@ -71,7 +71,7 @@
     </div>
   </section>
 
-  <button class="clearLS">Отчистить</button>
+  <button class="clearLS ripple__button">Отчистить</button>
 
   <footer class="footer">
     <div class="container">
@@ -87,7 +87,7 @@
           <form class="form">
             <div class="input-box">
               <input type="text" class="saving-amount-input input" name="savingCurrencyAmount"
-                placeholder="Введите сумму">
+                placeholder="Введите сумму" autocomplete="off">
               <div class="input-line"></div>
             </div>
             <div class="form__item input-box ">
@@ -113,7 +113,7 @@
                 </label>
               </div>
             </div>
-            <button class="form-send-button" type="submit">Записать</button>
+            <button class="form-send-button ripple__button" type="submit">Записать</button>
           </form>
         </div>
       </div>
