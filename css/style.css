@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;1,100&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -21,14 +21,14 @@ body {
   color: #fff;
   color: #fff;
   overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
 
 input,
 button {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
@@ -121,6 +121,7 @@ button {
 }
 
 .menu-button {
+  background: transparent;
   width: 30px;
   height: 30px;
   cursor: pointer;
@@ -150,7 +151,7 @@ button {
 .saving {
   background: #121212;
   color: #fff;
-  font-weight: 300;
+  font-weight: 100;
   margin: 10px;
   padding: 7px 20px;
   border-radius: 3px;
@@ -164,6 +165,7 @@ button {
   font-size: 55px;
   margin: 15px auto;
   display: block;
+  font-weight: 100;
 }
 
 .currency {
@@ -181,8 +183,9 @@ button {
   margin: 0px auto 22px;
   -webkit-transform: scale(0.75);
           transform: scale(0.75);
+  font-weight: 300;
   opacity: 0;
-  outline: #000000;
+  outline: 1px #000000;
 }
 
 .currency:hover {
