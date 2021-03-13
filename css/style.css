@@ -666,3 +666,33 @@ button {
     font-size: 14px;
   }
 }
+
+@media (prefers-color-scheme: light) {
+  body,
+  button {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .top-bar {
+    background: -webkit-gradient(linear, left bottom, left top, from(#6200ee), to(#6200ee)), #121212;
+    background: linear-gradient(0deg, #6200ee, #6200ee), #121212;
+    -webkit-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .clearLS {
+    color: #6200ee;
+    border: 2px solid rgba(0, 0, 0, 0.12);
+    outline: 1px #000;
+  }
+  .clearLS:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .clearLS:focus {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+  .show-form-button,
+  .form-send-button {
+    background: #6200ee;
+  }
+}
