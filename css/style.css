@@ -33,6 +33,11 @@ button {
   font-size: 16px;
 }
 
+button {
+  display: block;
+  cursor: pointer;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -155,6 +160,18 @@ button {
   margin: 10px;
   padding: 7px 20px;
   border-radius: 3px;
+  outline: 1px #000;
+  cursor: pointer;
+}
+
+.saving:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.saving:focus {
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-box-shadow: inset 0px 0px 0px 1px #ffffff;
+          box-shadow: inset 0px 0px 0px 1px #ffffff;
 }
 
 .rates-section {
@@ -186,6 +203,7 @@ button {
   font-weight: 300;
   opacity: 0;
   outline: 1px #000000;
+  cursor: pointer;
 }
 
 .currency:hover {
@@ -254,14 +272,27 @@ button {
   display: block;
   margin: 30px auto;
   margin-bottom: 100px;
-  padding: 7px 25px;
-  background: #170e41;
-  color: #fff;
+  text-transform: uppercase;
+  padding: 10px 15px;
+  background: transparent;
+  color: #bb86fc;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
   opacity: 0;
   -webkit-transform: scale(0.75);
           transform: scale(0.75);
   -webkit-animation-delay: 2s;
           animation-delay: 2s;
+  outline: 1px #000;
+}
+
+.clearLS:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.clearLS:focus {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #ffffff;
 }
 
 .currency,
@@ -290,11 +321,13 @@ button {
 
 .show-form-button,
 .form-send-button {
-  background: #304ffe;
-  color: #fff;
-  padding: 7px 20px;
-  margin: 15px auto 3px auto;
-  font-size: 16px;
+  display: block;
+  padding: 10px 15px;
+  margin: 15px auto;
+  text-transform: uppercase;
+  border-radius: 4px;
+  color: #000;
+  background: #bb86fc;
 }
 
 .footer__bottom {
@@ -366,6 +399,7 @@ button {
 }
 
 .input {
+  outline: 1px #000;
   position: absolute;
   top: 0;
   left: 0;
@@ -373,7 +407,7 @@ button {
   height: 100%;
   padding: 7px 15px;
   font-size: 18px;
-  color: #304ffe;
+  color: #bb86fc;
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -391,7 +425,7 @@ button {
   display: block;
   height: 2px;
   width: 100%;
-  background-color: #304ffe;
+  background-color: #bb86fc;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   -webkit-transform: scaleX(0);
@@ -428,7 +462,7 @@ button {
 .radio-style {
   width: 16px;
   height: 16px;
-  border: 2px solid #304ffe;
+  border: 2px solid #bb86fc;
   border-radius: 50px;
   position: relative;
 }
@@ -441,7 +475,7 @@ button {
   -webkit-transform: translate(-50%, -50%) scale(0);
           transform: translate(-50%, -50%) scale(0);
   display: block;
-  background-color: #304ffe;
+  background-color: #bb86fc;
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -463,46 +497,8 @@ button {
           transform: translate(-50%, -50%) scale(1);
 }
 
-.form-send-button {
-  margin: 0;
-}
-
 .chart-wrap {
   margin-top: 10px;
-}
-
-/* Use this selector to override the line style on a given series */
-.ct-series-a .ct-line,
-.ct-series-a .ct-point {
-  stroke: #ffffff !important;
-}
-
-.ct-series-a .ct-line {
-  /* Set the colour of this series line */
-  /* Control the thikness of your lines */
-  stroke-width: 3px;
-  /* Create a dashed line with a pattern */
-}
-
-.ct-series-a .ct-area {
-  fill: #ffffff !important;
-  fill-opacity: 0.08;
-}
-
-.ct-label {
-  color: rgba(255, 255, 255, 0.2) !important;
-}
-
-.ct-series-a .ct-point {
-  /* Size of your points */
-  stroke-width: 8px;
-  stroke-linecap: circle;
-}
-
-.ct-grid {
-  stroke: rgba(255, 255, 255, 0.05) !important;
-  stroke-width: 2px;
-  stroke-dasharray: 8px;
 }
 
 @-webkit-keyframes fade-in {
