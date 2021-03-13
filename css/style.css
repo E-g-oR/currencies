@@ -45,7 +45,7 @@ button {
 
 .ripple__button .ripple {
   position: absolute;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(187, 134, 252, 0.5);
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   pointer-events: none;
