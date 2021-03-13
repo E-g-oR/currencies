@@ -96,8 +96,7 @@ button {
   overflow: hidden;
   -webkit-transition: 0.3s cubic-bezier(0.3, 0.82, 0.3, 1);
   transition: 0.3s cubic-bezier(0.3, 0.82, 0.3, 1);
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.09)), to(rgba(255, 255, 255, 0.09))), #121212;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09)), #121212;
+  background: rgba(255, 255, 255, 0.09);
   -webkit-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid #191919;
@@ -198,6 +197,7 @@ button {
 .saving {
   background: #121212;
   color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.12);
   font-weight: 100;
   margin: 10px;
   padding: 7px 20px;
@@ -232,13 +232,13 @@ button {
 }
 
 .currency {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
   display: block;
   text-align: left;
   color: #fff;
   width: 100%;
-  background-color: #121212;
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0.05))), #121212;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+  background: #1e1e1e;
   -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -254,6 +254,8 @@ button {
 
 .currency:hover {
   background: rgba(255, 255, 255, 0.04);
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .currency:focus {
@@ -418,8 +420,7 @@ button {
 
 .popup__window {
   margin-top: -70px;
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.16)), to(rgba(255, 255, 255, 0.16))), #121212;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #121212;
+  background: rgba(255, 255, 255, 0.16);
   -webkit-box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
   color: rgba(255, 255, 255, 0.6);
@@ -674,10 +675,38 @@ button {
     color: rgba(0, 0, 0, 0.87);
   }
   .top-bar {
-    background: -webkit-gradient(linear, left bottom, left top, from(#6200ee), to(#6200ee)), #121212;
-    background: linear-gradient(0deg, #6200ee, #6200ee), #121212;
+    background: #6200ee;
     -webkit-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
             box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .currency,
+  .saving {
+    color: rgba(0, 0, 0, 0.87);
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  .currency:hover,
+  .saving:hover {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .currency:focus,
+  .saving:focus {
+    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  .currency__title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .currrency__text {
+    color: rgba(0, 0, 0, 0.6);
   }
   .clearLS {
     color: #6200ee;
@@ -685,7 +714,7 @@ button {
     outline: 1px #000;
   }
   .clearLS:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.05);
   }
   .clearLS:focus {
     background: rgba(0, 0, 0, 0.1);
