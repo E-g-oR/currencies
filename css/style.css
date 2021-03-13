@@ -38,6 +38,48 @@ button {
   cursor: pointer;
 }
 
+.ripple__button {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple__button .ripple {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  -webkit-animation: ripple 0.7s infinite;
+          animation: ripple 0.7s infinite;
+}
+
+@-webkit-keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -174,6 +216,10 @@ button {
           box-shadow: inset 0px 0px 0px 1px #ffffff;
 }
 
+.saving span {
+  pointer-events: none;
+}
+
 .rates-section {
   margin-top: 30px;
 }
@@ -256,12 +302,18 @@ button {
 }
 
 .currency__title {
+  font-weight: 500;
   font-size: 27px;
-  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 .currrency__text {
-  line-height: 30px;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 .currency__rate {
@@ -366,21 +418,29 @@ button {
 
 .popup__window {
   margin-top: -70px;
-  background-color: #d9d9d9;
-  background-color: #121212;
-  color: #fff;
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.16)), to(rgba(255, 255, 255, 0.16))), #121212;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #121212;
+  -webkit-box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  padding: 30px;
+  padding: 20px 24px;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   border-radius: 5px;
-  -webkit-box-shadow: 0 10px 30px #070707;
-          box-shadow: 0 10px 30px #070707;
+  min-width: 280px;
   border: 1px solid #5555553d;
 }
 
 .popup.active .popup__window {
   margin-top: -170px;
+}
+
+.popup__title {
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 .form__item {
@@ -460,8 +520,8 @@ button {
 }
 
 .radio-style {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border: 2px solid #bb86fc;
   border-radius: 50px;
   position: relative;
@@ -476,8 +536,8 @@ button {
           transform: translate(-50%, -50%) scale(0);
   display: block;
   background-color: #bb86fc;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 20px;
   -webkit-transition: 0.13s;
   transition: 0.13s;

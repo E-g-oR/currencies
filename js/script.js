@@ -11,7 +11,8 @@ const URLRatesList = [
   'https://blockchain.info/ticker',                 //? Bitcoin
 ];
 // !  Конец
-
+//?  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//?  €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
 const URLImagesList = [
   'img/united-states.svg',
   'img/european-union.svg',
@@ -47,68 +48,32 @@ const currencyTypes = ['USD', 'EUR', 'BYN'];
 
 var ratesStatistics = []
 
-// TODO тестовые данные для графика
-// const chartTestData = {
-//   labels: ['02.13', '02.14', '02.15', '02.16', '02.17', '02.18', '02.19', '02.20'],
-//   series: [
-//     ['3.8783', '3.5216', '3.983', '3.6125', '3.1930', '3.1736', '3.7263', '3.4172',]
-//   ]
-// }
-var options = {
-  // не отрисовывать точки линейного графика
-  showPoint: true,
-  // Отключение сглаживания линий
-  lineSmooth: false,
-  // Настройки X-оси
-  showArea: true,
-  axisX: {
-    // Отключаем сетку для этой оси
-    offset: 10,
-    showGrid: true,
-    // и не показываем метки
-    showLabel: true
-  },
-  // настройки Y-оси 
-  axisY: {
-    // Смещение от меток
-    offset: 45,
-    // Функция интерполяции метки позволяет менять значение метки,
-    // в текущем примере появляются миллионы "m".
-    // labelInterpolationFnc: function (value) {
-    //   return '' + value + 'm';
-    // }
-  }
-};
 
 
 
 const savingPattern = (data) => {
   return `        
-    <div class="savings__item saving">
+    <button class="savings__item saving ripple__button">
       <span class="saving__text">
         <span class="saving__currency">${data.type}</span>
         <span class="saving__amount">${data.amount}</span>
       </span>
-    </div>`
+    </button>`
 }
 
-const getStatisticsRequest = (URLStatisticsList) => {
+async function getStatisticsRequest(URLStatisticsList) {
   URLStatisticsList.forEach(statisticsURL => {
     fetch(statisticsURL)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
         let objectCurId = data[0].Cur_ID;
-        // console.log(objectCurId);
         ratesStatistics.forEach(elem => {
           if (elem.Cur_ID === objectCurId) {
             elem.statistics = data;
           }
-        })
-        //         console.log(`Курс неделю назад: ${data[0].Cur_OfficialRate};
-        // Курс сегодня: ${data[data.length - 1].Cur_OfficialRate};`);
-      })
-  })
+        });
+      });
+  });
 }
 
 
@@ -125,16 +90,11 @@ function getStatistics(searchName, currencyElem) {
         if (elem.Cur_Name === searchName) {
           const chartHTML = `<div class="chart-wrap"><canvas class="ct-chart chart_div" id="${elem.Cur_Abbreviation}-linear-chart"></canvas></div>`;
           const elemStatistics = elem.statistics;
-          // chartData.labels = [];
-          // chartData.series[0] = [];
           elemStatistics.forEach(statisticsElem => {
             const shortDate = statisticsElem.Date.slice(5, 10).replace('-', '.');
             statisticsElem.Date = shortDate;
-            // chartData.labels.push(shortDate); //? chartist.js
             labels.push(shortDate); //! chart.js
             data.push(statisticsElem.Cur_OfficialRate); //! chart.js
-            // chartData.series[0].push(statisticsElem.Cur_OfficialRate); //? chartist.js
-            // addRowsNewArray.push([shortDate, statisticsElem.Cur_OfficialRate]) //* google charts
           })
           currencyElem.innerHTML += chartHTML;
           // ! const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
@@ -179,8 +139,6 @@ function getStatistics(searchName, currencyElem) {
                     display: true,
                     fontColor: "rgba(255,255,255,0.5)",
                     fontStyle: "normal",
-                    // beginAtZero: true,
-                    // maxTicksLimit: 5,
                     padding: 20
                   },
                   gridLines: {
@@ -196,7 +154,6 @@ function getStatistics(searchName, currencyElem) {
                     display: false,
                     fontColor: "rgba(255,255,255,0.5)",
                     padding: 20,
-                    // fontColor: "rgba(0,0,0,0.5)",
                     fontStyle: "normal"
                   }
                 }]
@@ -209,12 +166,11 @@ function getStatistics(searchName, currencyElem) {
     }
   }
 
-  // console.dir(addRowsNewArray);
 
 }
 
 
-const currenciesPattern = (data, transitionDelay) => {        //? шаблон элемента с курсом валют: записывает курс евро и доллара, добавляет объект в массив со статистикой
+function currenciesPattern(data, transitionDelay) {
   if ((data.Cur_Abbreviation === 'USD')) {
     localStorage.setItem('USDRate', data.Cur_OfficialRate);
   } else if (data.Cur_Abbreviation === 'EUR') {
@@ -229,7 +185,6 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
             data.Cur_ID === 302 ? URLImagesList[6] :
               data.Cur_ID === 143 ? URLImagesList[7] :
                 URLImagesList[3];
-  // console.log(data);
   if (data.Cur_Name) {
     ratesStatistics.push({
       Cur_ID: data.Cur_ID,
@@ -238,7 +193,7 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
       Cur_RateToday: data.Cur_OfficialRate
     });
     return `
-        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
+        <button class="currencies__item currency ripple__button" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
@@ -248,11 +203,12 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
               <p class="currrency__text">Текущий курс:<span class="currency__rate"> ${data.Cur_OfficialRate} </span></p>
             </div>
           </div>
-        </div>
-  `
+        </button>
+  `;
   }
-  else return `
-        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
+  else
+    return `
+        <button class="currencies__item currency ripple__button" style="animation-delay: ${transitionDelay}s;">
           <div class="currency__body">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
@@ -262,19 +218,18 @@ const currenciesPattern = (data, transitionDelay) => {        //? шаблон �
               <p class="currrency__text">Текущий курс:<span class="currency__rate"> ${data.USD.last} </span></p>
             </div>
           </div>
-        </div>
-  `
+        </button>
+  `;
 }
 
 
 
-const getRates = (list) => {
+async function getRates(list) {
   let plusNumber = 0.2;
   if (window.innerWidth <= 535) {
     plusNumber = 0.11;
   }
   let transitionDelay = 0.2;
-  // TODO убрать коменты
   currenciesBlock.innerHTML = '';
   list.forEach(url => {
     fetch(url)
@@ -282,8 +237,8 @@ const getRates = (list) => {
       .then(data => {
         currenciesBlock.innerHTML += currenciesPattern(data, transitionDelay);
         transitionDelay += plusNumber;
-      })
-  })
+      });
+  });
 }
 
 const setSavings = {
@@ -387,11 +342,30 @@ const setSavings = {
 const init = () => {
   setSavings.getSaves();
   getRates(URLRatesList);
-  // console.log(ratesStatistics);
 
-  // console.log(chartTestData);
-  // new Chartist.Line('#linear', chartTestData, testOptions);
+  function ripple(e) {
+    const target = e.target;
+    if (target.closest('.ripple__button')) {
+      const closest = target.closest('.ripple__button');
+      // console.log('cool');
+      let x = e.clientX - e.target.offsetLeft;
+      let y = e.clientY - e.target.offsetTop;
 
+      let ripples = document.createElement('span');
+      ripples.classList.add('ripple')
+      ripples.style.left = x + 'px';
+      ripples.style.top = y + 'px';
+      closest.appendChild(ripples);
+
+      setTimeout(() => {
+        ripples.remove();
+      }, 700)
+    }
+  }
+
+  document.addEventListener('click', e => {
+    ripple(e);
+  });
 
   topBarArrow.addEventListener('click', () => {
     topBar.classList.toggle('menu-active');
@@ -403,12 +377,8 @@ const init = () => {
       const currencyElem = target.closest('.currency');
       let currencyElemTextContent = currencyElem.textContent;
       currencyElemTextContent = currencyElemTextContent.replace(/\s+/g, ' ').trim(); //! удаляет все лишние пробелы
-      // console.log(currencyElemTextContent);
       const ratePosIndex = currencyElemTextContent.indexOf("Текущий курс"); //! находит место "Текущий курс"     8
-      // !   8
-      // console.log(ratePosIndex);
       const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
-      // console.log(currencyName);
       getStatistics(currencyName, currencyElem);
     }
   })
@@ -435,7 +405,6 @@ const init = () => {
     const savingCurrencyAmount = Number(form.elements.savingCurrencyAmount.value);
     const savingCurrencyType = form.elements.savingCurrencyType.value;
     if (savingCurrencyType !== '' && savingCurrencyAmount !== '') {
-      // console.log(`Введено число: ${savingCurrencyAmount}, выбрана валюта: ${savingCurrencyType}`);
       setSavings.setSave(savingCurrencyType, savingCurrencyAmount);
       popupRemove();
       form.reset();
@@ -451,7 +420,6 @@ const init = () => {
   });
 
   footerDate.textContent = new Date().toDateString();
-
 
 
 
@@ -478,7 +446,7 @@ const init = () => {
   ];
   getStatisticsRequest(URLStatisticsList);
   // ! ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼
-  // console.log(ratesStatistics);
+
 }
 // !  конец
 
