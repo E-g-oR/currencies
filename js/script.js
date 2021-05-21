@@ -99,26 +99,47 @@ function getStatistics(searchName, currencyElem) {
           currencyElem.innerHTML += chartHTML;
           // ! const chartDraw = new Chartist.Line(`#${elem.Cur_Abbreviation}-linear-chart`, chartData, options);
           var ctx = document.getElementById(`${elem.Cur_Abbreviation}-linear-chart`).getContext("2d");
-
+          let pointColor,
+            fontColor,
+            addColorStop1 = "rgba(255, 255, 255, 0.3)",
+            addColorStop2 = "rgba(255, 255, 255, 0.1)",
+            addColorStop3 = "rgba(255, 255, 255, 0.005)",
+            addColorStop4 = "rgba(255, 255, 255, 0.00001)";
+          if (document.body.style.backgroundColor == "#fff") {
+            pointColor = "#000";
+            fontColor = "rgba(0,0,0,0.5)";
+            addColorStop1 = "rgba(0, 0, 0, 0.3)";
+            addColorStop2 = "rgba(0, 0, 0, 0.1)";
+            addColorStop3 = "rgba(0, 0, 0, 0.005)";
+            addColorStop4 = "rgba(0, 0, 0, 0.00001)";
+          } else {
+            fontColor = "rgba(255,255,255,0.5)"
+            pointColor = "#fff";
+            addColorStop1 = "rgba(255, 255, 255, 0.3)";
+            addColorStop2 = "rgba(255, 255, 255, 0.1)";
+            addColorStop3 = "rgba(255, 255, 255, 0.005)";
+            addColorStop4 = "rgba(255, 255, 255, 0.00001)";
+          }
+          console.log(document.querySelector('.currency').style);
           var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
           gradientStroke.addColorStop(0, "#80b6f4");
           gradientStroke.addColorStop(1, "#f49080");
           var gradientFill = ctx.createLinearGradient(0, 0, 0, 350);
-          gradientFill.addColorStop(0, "rgba(255, 255, 255, 0.3)");
-          gradientFill.addColorStop(0.3, "rgba(255, 255, 255, 0.1)");
-          gradientFill.addColorStop(0.7, "rgba(255, 255, 255, 0.005)");
-          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.00001)");
+          gradientFill.addColorStop(0, addColorStop1);
+          gradientFill.addColorStop(0.3, addColorStop2);
+          gradientFill.addColorStop(0.7, addColorStop3);
+          gradientFill.addColorStop(1, addColorStop4);
           var myChart = new Chart(ctx, {
             type: 'line',
             data: {
               labels: labels,
               datasets: [{
                 label: `${elem.Cur_Abbreviation}`,
-                borderColor: "#fff",
-                pointBorderColor: "#fff",
-                pointBackgroundColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "#fff",
+                borderColor: pointColor,
+                pointBorderColor: pointColor,
+                pointBackgroundColor: pointColor,
+                pointHoverBackgroundColor: pointColor,
+                pointHoverBorderColor: pointColor,
                 pointBorderWidth: 3,
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 1,
@@ -137,7 +158,7 @@ function getStatistics(searchName, currencyElem) {
                 yAxes: [{
                   ticks: {
                     display: true,
-                    fontColor: "rgba(255,255,255,0.5)",
+                    fontColor: fontColor,
                     fontStyle: "normal",
                     padding: 20
                   },
@@ -152,7 +173,7 @@ function getStatistics(searchName, currencyElem) {
                   },
                   ticks: {
                     display: false,
-                    fontColor: "rgba(255,255,255,0.5)",
+                    fontColor: fontColor,
                     padding: 20,
                     fontStyle: "normal"
                   }
