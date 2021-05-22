@@ -214,8 +214,8 @@ function currenciesPattern(data, transitionDelay) {
       Cur_RateToday: data.Cur_OfficialRate
     });
     return `
-        <button class="currencies__item currency ripple__button" style="animation-delay: ${transitionDelay}s;">
-          <div class="currency__body">
+        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
+          <button class="currency__body ripple__button">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
             </div>
@@ -223,14 +223,15 @@ function currenciesPattern(data, transitionDelay) {
               <h4 class="currency__title">Валюта: ${data.Cur_Name} </h4>
               <p class="currrency__text">Текущий курс:<span class="currency__rate"> ${data.Cur_OfficialRate} </span></p>
             </div>
-          </div>
-        </button>
+          </button>
+          <div class="chart"></div>
+        </div>
   `;
   }
   else
     return `
-        <button class="currencies__item currency ripple__button" style="animation-delay: ${transitionDelay}s;">
-          <div class="currency__body">
+        <div class="currencies__item currency" style="animation-delay: ${transitionDelay}s;">
+          <button class="currency__body ripple__button">
             <div class="currency__img">
               <img src="${ImageURL}" alt="">
             </div>
@@ -238,8 +239,9 @@ function currenciesPattern(data, transitionDelay) {
               <h4 class="currency__title">Валюта: Bitcoin </h4>
               <p class="currrency__text">Текущий курс:<span class="currency__rate"> ${data.USD.last} </span></p>
             </div>
-          </div>
-        </button>
+          </button>
+          <div class="chart"></div>
+        </div>
   `;
 }
 
@@ -256,7 +258,7 @@ async function getRates(list) {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        currenciesBlock.innerHTML += currenciesPattern(data, transitionDelay);
+        currenciesBlock.insertAdjacentHTML("beforeEnd", currenciesPattern(data, transitionDelay));
         transitionDelay += plusNumber;
       });
   });
@@ -368,9 +370,9 @@ const init = () => {
     const target = e.target;
     if (target.closest('.ripple__button')) {
       const closest = target.closest('.ripple__button');
-      // console.log('cool');
-      let x = e.clientX - e.target.offsetLeft;
-      let y = e.clientY - e.target.offsetTop;
+      let x = e.clientX - closest.getBoundingClientRect().left;
+      let y = e.clientY - closest.getBoundingClientRect().top;
+
 
       let ripples = document.createElement('span');
       ripples.classList.add('ripple')
@@ -378,9 +380,29 @@ const init = () => {
       ripples.style.top = y + 'px';
       closest.appendChild(ripples);
 
+      let ripplesAll = closest.querySelectorAll('.ripple');
       setTimeout(() => {
-        ripples.remove();
+        closest.lastChild.remove();
+        ripplesAll.forEach(el => el.remove())
       }, 700)
+
+
+      // let ripplesAll = closest.querySelectorAll('.ripple');
+      // console.log(ripplesAll);
+      // setTimeout(() => {
+      //   ripplesAll.remove();
+      // }, 700)
+
+
+    }
+
+    if (target.closest('.currency')) {
+      const currencyElem = target.closest('.currency');
+      let currencyElemTextContent = currencyElem.textContent;
+      currencyElemTextContent = currencyElemTextContent.replace(/\s+/g, ' ').trim(); //! удаляет все лишние пробелы
+      const ratePosIndex = currencyElemTextContent.indexOf("Текущий курс"); //! находит место "Текущий курс"     8
+      const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
+      getStatistics(currencyName, currencyElem);
     }
   }
 
@@ -394,14 +416,14 @@ const init = () => {
 
   currenciesBlock.addEventListener('click', (e) => {
     const target = e.target;
-    if (target.closest('.currency')) {
-      const currencyElem = target.closest('.currency');
-      let currencyElemTextContent = currencyElem.textContent;
-      currencyElemTextContent = currencyElemTextContent.replace(/\s+/g, ' ').trim(); //! удаляет все лишние пробелы
-      const ratePosIndex = currencyElemTextContent.indexOf("Текущий курс"); //! находит место "Текущий курс"     8
-      const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
-      getStatistics(currencyName, currencyElem);
-    }
+    // if (target.closest('.currency')) {
+    //   const currencyElem = target.closest('.currency');
+    //   let currencyElemTextContent = currencyElem.textContent;
+    //   currencyElemTextContent = currencyElemTextContent.replace(/\s+/g, ' ').trim(); //! удаляет все лишние пробелы
+    //   const ratePosIndex = currencyElemTextContent.indexOf("Текущий курс"); //! находит место "Текущий курс"     8
+    //   const currencyName = currencyElemTextContent.slice(8, ratePosIndex - 1);
+    //   getStatistics(currencyName, currencyElem);
+    // }
   })
 
   showFormButton.addEventListener('click', () => {      //*   вызывает окно с формой
