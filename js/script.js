@@ -120,7 +120,7 @@ function getStatistics(searchName, currencyElem) {
             addColorStop3 = "rgba(255, 255, 255, 0.005)";
             addColorStop4 = "rgba(255, 255, 255, 0.00001)";
           }
-          console.log(document.querySelector('.currency').style);
+          // console.log(document.querySelector('.currency').style);
           var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
           gradientStroke.addColorStop(0, "#80b6f4");
           gradientStroke.addColorStop(1, "#f49080");
